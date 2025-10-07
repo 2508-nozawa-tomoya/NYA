@@ -26,10 +26,10 @@
     <div class="main-contents">
         <form method="put" th:action="@{/attendance/update/{id}(id=${fromModel.id}}" th:object="${formModel}">
             <div class="errorMessages">
-                <div th:if="${#fields.hasErrors('workDate')}" th:errors="*{account}"></div>
-                <div th:if="${#fields.hasErrors('startTime')}" th:errors="*{password}"></div>
-                <div th:if="${#fields.hasErrors('endTime')}" th:errors="*{name}"></div>
-                <div th:if="${#fields.hasErrors('rest')}" th:errors="*{branchId}"></div>
+                <div th:if="${#fields.hasErrors('workDate')}" th:errors="*{workDate}"></div>
+                <div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></div>
+                <div th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></div>
+                <div th:if="${#fields.hasErrors('rest')}" th:errors="*{rest}"></div>
             </div>
             <div class="form-area">
                 <label>日付</label>
@@ -46,7 +46,11 @@
     </div>
 </main>
 <footer>
-
+    <div class="footer-contents">
+        <form th:action="@{/}">
+            <input type="submit" value="戻る">
+        </form>
+    </div>
 </footer>
 </body>
 </html>

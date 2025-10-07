@@ -3,7 +3,6 @@ package com.example.NYA.controller;
 import com.example.NYA.controller.form.AttendanceForm;
 import com.example.NYA.service.AttendanceService;
 import io.micrometer.common.util.StringUtils;
-import jdk.jfr.Description;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
