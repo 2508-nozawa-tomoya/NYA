@@ -23,7 +23,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                                         AuthenticationException exception) throws IOException {
 
         List<String> errorMessages = new ArrayList<>();
-        String account = request.getParameter("username");
+        String account = request.getParameter("account");
         String password = request.getParameter("password");
         boolean hasInputError = false;
 

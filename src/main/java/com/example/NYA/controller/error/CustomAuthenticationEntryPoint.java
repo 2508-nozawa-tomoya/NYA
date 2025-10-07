@@ -2,6 +2,7 @@ package com.example.NYA.controller.error;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -16,7 +17,9 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException exception) throws IOException {
-        request.getSession().setAttribute("errorMessage", "ログインしてください");
+
+        HttpSession session =  request.getSession();
+        session.setAttribute("errorMessage", "ログインしてください");
         response.sendRedirect(request.getContextPath() + "/login");
     }
 }

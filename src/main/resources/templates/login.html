@@ -10,6 +10,7 @@
     <h2 class="login-h2">勤怠管理システム ログインページ</h2>
 </div>
 <div class="main-contents">
+    <div th:text="${errorMessage}"></div>
     <div th:if="${errorMessages}">
         <div class="login-errorMessages">
             <div th:each="errorMessage : ${errorMessages}">
@@ -21,7 +22,7 @@
         <form th:action="@{/login}" method="post">
             <label>社員番号</label>
             <div>
-                <input type="text" name="username" th:value="${account}"/>
+                <input type="text" name="account" th:value="${account}"/>
             </div>
             <label>パスワード</label>
             <div>

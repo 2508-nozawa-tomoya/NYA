@@ -33,11 +33,12 @@ public class SecurityConfig {
 
         http
                 .formLogin(login -> login
-                        .failureHandler(customAuthenticationFailureHandler)
                         .loginPage("/login")
                         //ログイン失敗した時のハンドリング
-
+                        .failureHandler(customAuthenticationFailureHandler)
                         .defaultSuccessUrl("/", true)
+                        .usernameParameter("account")
+                        .passwordParameter("password")
                         .permitAll()
                 )
                 .logout(logout -> logout
