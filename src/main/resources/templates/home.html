@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>ホーム画面</title>
+</head>
+<body>
+<div class="header-contents">
+    <div class="header" th:if="${loginUser != null}">
+        <div class="admin-wrap">
+            <a class="btn-admin" th:if="${loginUser.departmentId == 1}" th:href="@{/admin}">管理者用</a>
+        </div>
+        <div class="approver-wrap">
+            <a class="btn-approver" th:if="${loginUser.authority == 0}" th:href="@{/approver}">承認者用</a>
+        </div>
+        <div class="btn-setting">
+            <a th:href="@{/setting}"><span>設定</span></a>
+        </div>
+        <form class="form-logout" th:action="@{/logout}" method="post">
+            <input class="button-logout" type="submit" value="ログアウト">
+        </form>
+    </div>
+</div>
+<div class="main-contents">
+    <h1 class="title">勤怠管理システム</h1>
+    <div class="user-info">
+        社員番号：<span th:text="${loginUser.account}"></span>
+    </div>
+    <div class="action-buttons">
+        <div class="btn-registration">
+            <a th:href="@{/registration}"><span>勤怠登録</span></a>
+        </div>
+        <form th:action="@{/application}" method="post" class="btn-application">
+            <button type="submit"><span>申請</span></button>
+        </form>
+    </div>
+    <div class="filtered-posts">
+        <form th:action="@{/}" method="get" th:object="${filterForm}">
+            <label>開始時間 <input type="time" th:field="*{startTime}"></label>
+            <label>終了時間 <input type="time" th:field="*{endTime}"></label>
+            <button type="submit">絞り込み</button>
+        </form>
+    </div>
+    <div class="month-nav">
+        <a th:href="@{'/?year=' + ${prevYear} + '&month=' + ${prevMonth}}">＜先月</a>
+        <span th:text="${month} + '月'"></span>
+        <a th:href="@{'/?year=' + ${nextYear} + '&month=' + ${nextMonth}}">来月＞</a>
+    </div>
+    <div class="application-status">
+        <p th:text="${month} + '月申請状況：' + ${status}"></p>
+    </div>
+    <table class="attendance-list">
+        <thead>
+        <tr>
+            <th>日付</th>
+            <th>勤務開始時間</th>
+            <th>勤務終了時間</th>
+            <th>休憩時間</th>
+            <th>労働時間</th>
+            <th>コメント</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="attendance, stat : ${attendances}">
+            <td th:text="${#temporals.format(attendance.workDate, 'M/d')}"></td>
+            <td th:text="${#temporals.format(attendance.startTime, 'HH:mm')}"></td>
+            <td th:text="${#temporals.format(attendance.endTime, 'HH:mm')}"></td>
+            <td th:text="${#temporals.format(attendance.rest, 'H:mm')}"></td>
+            <!-- 労働時間 -->
+            <td th:text="${workingHour[stat.index]}"></td>
+            <td th:text="${attendance.comments}"></td>
+            <td><a class="edit-link" th:href="@{/edit}">勤怠編集</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

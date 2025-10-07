@@ -1,0 +1,224 @@
+/* ===== 共通レイアウト ===== */
+body {
+    font-family: "Noto Sans JP", "Segoe UI", Arial, sans-serif;
+    background-color: #f5f6f7;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== ヘッダー ===== */
+.header-contents {
+    background-color: #004b8d;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.header a {
+    color: #fff;
+    text-decoration: none;
+    background-color: #007bff;
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    font-size: 14px;
+}
+
+.header a:hover {
+    background-color: #005fcc;
+}
+
+.button-logout {
+    background-color: #d9534f;
+    border: none;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-logout:hover {
+    background-color: #c9302c;
+}
+
+/* ===== メインコンテンツ ===== */
+.main-contents {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px 30px;
+}
+
+.title {
+    text-align: center;
+    color: #004b8d;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* ===== 社員番号表示 ===== */
+.user-info {
+    text-align: right;
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* ===== ボタン群 ===== */
+.btn-registration a,
+.btn-application button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-registration a:hover,
+.btn-application button:hover {
+    background-color: #005fcc;
+}
+
+/* ===== 絞り込みフォーム ===== */
+.filtered-posts form {
+    margin: 15px 0 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filtered-posts input[type="time"] {
+    padding: 4px 8px;
+    font-size: 14px;
+}
+
+.filtered-posts button {
+    padding: 5px 12px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+.filtered-posts button:hover {
+    background-color: #1e7e34;
+}
+
+/* ===== 月移動ナビゲーション ===== */
+.month-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+}
+
+.month-nav a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.month-nav a:hover {
+    text-decoration: underline;
+}
+
+/* ===== 月申請状況 ===== */
+.application-status {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #444;
+}
+
+/* ===== 勤怠テーブル ===== */
+table.attendance-list {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+table.attendance-list th {
+    background-color: #004b8d;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+table.attendance-list td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 8px;
+    background-color: #fafafa;
+}
+
+table.attendance-list tr:nth-child(even) td {
+    background-color: #f0f4f8;
+}
+
+.edit-link {
+    background-color: #ffc107;
+    color: #333;
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.edit-link:hover {
+    background-color: #e0a800;
+}
+
+/* ===== 調整（下余白など） ===== */
+form.btn-application {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+/* ===== 勤怠登録・申請ボタン===== */
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px; /* ボタン間のすき間 */
+    margin-bottom: 20px; /* 下のテーブルとの間 */
+}
+
+.btn-registration a,
+.btn-application button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-registration a:hover,
+.btn-application button:hover {
+    background-color: #005fcc;
+}
+
+.btn-application {
+    margin: 0;
+}
