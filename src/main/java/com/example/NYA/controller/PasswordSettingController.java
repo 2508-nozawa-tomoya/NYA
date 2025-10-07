@@ -34,18 +34,21 @@ public class PasswordSettingController {
     public ModelAndView changePassword(@AuthenticationPrincipal LoginUserDetails loginUser,
                                        @PathVariable String id,
                                        RedirectAttributes attributes) {
+
         List<String> errorMessages = new ArrayList<>();
         if (StringUtils.isBlank(id) || !id.matches("^[0-9]+$")) {
             errorMessages.add(E0019);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/");
         }
+
         UserForm user = userService.selectUserById(Integer.valueOf(id));
         if (user == null) {
             errorMessages.add(E0019);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/");
         }
+
         ModelAndView mav = new ModelAndView();
         mav.setViewName("change-password");
         mav.addObject("formModel", user);
@@ -59,6 +62,7 @@ public class PasswordSettingController {
                                        String confirmationPassword,
                                        @ModelAttribute("formModel") @Validated UserForm userForm,
                                        BindingResult result) {
+
         if (userForm.getPassword() != null) {
             String password = userForm.getPassword();
             if (!password.matches(confirmationPassword)) {
@@ -67,6 +71,7 @@ public class PasswordSettingController {
                 result.addError(fieldError);
             }
         }
+
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
             mav.addObject("loginUser", loginUser);
@@ -74,6 +79,7 @@ public class PasswordSettingController {
             mav.setViewName("/password-change");
             return mav;
         }
+
         userService.save(userForm);
         return new ModelAndView("redirect:/");
     }

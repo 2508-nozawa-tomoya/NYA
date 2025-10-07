@@ -21,8 +21,10 @@ public class AttendanceService {
 
     // レコード取得(ID)
     public AttendanceForm selectAttendanceById(Integer id) {
+
         Attendance result = attendanceRepository.findById(id).orElse(null);
         AttendanceForm attendanceForm = new AttendanceForm();
+
         if (result == null) {
             return null;
         } else {
@@ -55,7 +57,9 @@ public class AttendanceService {
 
     // DBから取得したデータをFormに設定
     private List<AttendanceForm> setAttendanceForm(List<Attendance> results) {
+
         List<AttendanceForm> attendances = new ArrayList<>();
+
         for (Attendance result : results) {
             AttendanceForm attendance = new AttendanceForm();
             attendance.setId(result.getId());
@@ -75,7 +79,9 @@ public class AttendanceService {
 
     // リクエストから取得した情報をentityに設定
     private Attendance setAttendanceEntity(AttendanceForm reqAttendance) {
+
         Attendance attendance = new Attendance();
+
         if (reqAttendance.getId() != null) {
             attendance.setId(reqAttendance.getId());
             attendance.setUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));

@@ -24,7 +24,7 @@
 </header>
 <main>
     <div class="main-contents">
-        <form method="put" th:action="@{/attendance/update/{id}(id=${fromModel.id}}" th:object="${formModel}">
+        <form method="put" th:action="@{/attendance/update/{id}(id=${formModel.id}}" th:object="${formModel}">
             <div class="errorMessages">
                 <div th:if="${#fields.hasErrors('workDate')}" th:errors="*{workDate}"></div>
                 <div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></div>
@@ -40,8 +40,11 @@
                 <input type="time" th:field="*{endTime}"/>
                 <label>休憩時間</label>
                 <input type="time" th:field="*{rest}"/>
-                <input type="submit" value="更新">
+                <input type="submit" value="更新"/>
             </div>
+            <form method="delete" th:action="@{/attendance/delete/{id}(id=${formModel.id}">
+                <input type="submit" value="削除" onSubmit="return CheckDelete()"/>
+            </form>
         </form>
     </div>
 </main>

@@ -28,18 +28,21 @@ public class AttendanceController {
     public ModelAndView editAttendance(@AuthenticationPrincipal LoginUserDetails loginUser,
                                        @PathVariable String id,
                                        RedirectAttributes attributes) {
+
         List<String> errorMessages = new ArrayList<>();
         if (StringUtils.isBlank(id) || !id.matches("^[0-9]+$")) {
             errorMessages.add(E0019);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/");
         }
+
         AttendanceForm attendance = attendanceService.selectAttendanceById(Integer.valueOf(id));
         if (attendance == null) {
             errorMessages.add(E0019);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/");
         }
+
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/attendance/edit");
         mav.addObject("formModel", attendance);
@@ -53,6 +56,7 @@ public class AttendanceController {
     public ModelAndView updateAttendance(@AuthenticationPrincipal LoginUserDetails loginUser,
                                          @ModelAttribute("formModel") @Validated AttendanceForm attendanceForm,
                                          BindingResult result) {
+
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
             mav.addObject("loginUser", loginUser);
@@ -60,6 +64,7 @@ public class AttendanceController {
             mav.setViewName("/attendance/edit");
             return mav;
         }
+
         attendanceService.saveAttendance(attendanceForm);
         return new ModelAndView("redirect:/");
     }

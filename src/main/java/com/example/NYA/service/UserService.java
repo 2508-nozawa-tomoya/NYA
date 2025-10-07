@@ -20,8 +20,10 @@ public class UserService {
 
     // レコード取得(ID)
     public UserForm selectUserById(Integer id) {
+
         User result = userRepository.findById(id).orElse(null);
-       UserForm userForm = new UserForm();
+        UserForm userForm = new UserForm();
+
         if (result == null) {
             return null;
         } else {
@@ -43,9 +45,11 @@ public class UserService {
 
     // レコード追加・更新
     public void save(UserForm userForm) {
+
         boolean isNewUser = userForm.getId() == null;
         boolean changeIsStopped = false;
         User dbUser = null;
+
         if (!isNewUser) {
             dbUser = userRepository.findById(userForm.getId()).orElse(null);
         }
@@ -60,13 +64,16 @@ public class UserService {
             User user = userRepository.findById(userForm.getId()).orElse(null);
             userForm.setPassword(user.getPassword());
         }
+
         User user = setUserEntity(userForm);
         userRepository.save(user);
     }
 
     // リクエストから取得した情報をentityに設定
     private User setUserEntity(UserForm reqUser) {
+
         User user = new User();
+
         if (reqUser.getId() != null) {
             user.setId(reqUser.getId());
             user.setUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));

@@ -23,8 +23,8 @@ public class ErrorMessages {
 
     public static final String E0019 = "不正なパラメータが入力されました";
 
+    // インスタンス化防止
     private ErrorMessages() {
-        // インスタンス化防止
     }
 
 }
