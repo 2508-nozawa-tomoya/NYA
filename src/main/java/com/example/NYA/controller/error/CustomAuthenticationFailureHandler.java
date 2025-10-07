@@ -27,12 +27,12 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         String password = request.getParameter("password");
         boolean hasInputError = false;
 
-        if(StringUtils.isBlank(account)){
+        if(account == null || account.isBlank()){
             errorMessages.add("社員番号を入力してください");
             hasInputError = true;
         }
 
-        if(StringUtils.isBlank(password)){
+        if(password == null || password.isBlank()){
             errorMessages.add("パスワードを入力してください");
             hasInputError = true;
         }

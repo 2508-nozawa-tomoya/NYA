@@ -13,7 +13,7 @@ public class LoginController {
     @GetMapping("/login")
     public String login(HttpSession session, Model model){
 
-        List<String> errorMessages = (List<String>) session.getAttribute("erroeMessages");
+        List<String> errorMessages = (List<String>) session.getAttribute("errorMessages");
 
         if(errorMessages != null && !errorMessages.isEmpty()){
             model.addAttribute("errorMessages", errorMessages);

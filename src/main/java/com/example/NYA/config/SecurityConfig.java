@@ -27,22 +27,22 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http,
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                             CustomAuthenticationEntryPoint customAuthenticationEntryPoint,
                                             CustomAccessDeniedHandler customAccessDeniedHandler) throws Exception{
 
         http
                 .formLogin(login -> login
+                        .failureHandler(customAuthenticationFailureHandler)
                         .loginPage("/login")
                         //ログイン失敗した時のハンドリング
-                        .failureHandler(customAuthenticationFailureHandler)
-                        .defaultSuccessUrl("/")
+
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login")
                         .clearAuthentication(true)
-                        .permitAll()
                 )
                 .authorizeHttpRequests(auth ->auth
                         .requestMatchers("/css/**", "/js/**").permitAll()

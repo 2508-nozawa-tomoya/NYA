@@ -7,6 +7,9 @@
     <title>仮ホーム画面</title>
 </head>
 <body>
-
+    <h1 th:text="${#authentication.name}"></h1>
+    <form class="logout" th:action="@{/logout}" th:method="get">
+        <input type="submit" value="ログアウト">
+    </form>
 </body>
 </html>
