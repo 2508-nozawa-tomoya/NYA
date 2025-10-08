@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.misc.Interval;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalTime;
 
 @Entity
 @Table(name= "users")
@@ -31,16 +32,19 @@ public class User {
     private Integer departmentId;
 
     @Column
-    private short authority;
+    private Integer authority;
 
     @Column
-    private Time workStart;
+    private LocalTime workStart;
 
     @Column
-    private Time workEnd;
+    private LocalTime workEnd;
 
     @Column
-    private String rest;
+    private LocalTime restStart;
+
+    @Column
+    private LocalTime restEnd;
 
     @Column
     private short isStopped;
