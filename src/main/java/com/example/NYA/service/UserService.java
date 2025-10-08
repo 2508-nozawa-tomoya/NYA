@@ -1,13 +1,17 @@
 package com.example.NYA.service;
 
 import com.example.NYA.controller.form.UserForm;
+import com.example.NYA.controller.form.UserForm;
 import com.example.NYA.repository.UserRepository;
 import com.example.NYA.repository.entity.User;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -22,11 +26,22 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    public Integer getLoginUserId() {
+        // 現在の認証情報を取得
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loginName = authentication.getName();
+
+        Optional<User> optionalUser = userRepository.findByAccount(loginName);
+        return optionalUser
+                .map(User::getId)
+                .orElseThrow(() -> new IllegalStateException("ログインユーザーが存在しません: " + loginName));
+    }
+
     //ユーザー全件取得
     public List<UserForm> findAll(){
-         List<User> results = userRepository.findAllByOrderByIdAsc();
+        List<User> results = userRepository.findAllByOrderByIdAsc();
 
-         return setUserForm(results);
+        return setUserForm(results);
     }
 
     //アカウント（社員番号）でユーザー情報を取得
@@ -110,5 +125,4 @@ public class UserService {
 
         return user;
     }
-
 }

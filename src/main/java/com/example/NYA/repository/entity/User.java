@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.Interval;
 
-import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-@Table(name= "users")
+@Table(name = "users")
 @Getter
 @Setter
 public class User {
@@ -27,32 +28,23 @@ public class User {
 
     @Column
     private String name;
-
-    @Column
+    @Column(name = "department_id")
     private Integer departmentId;
 
     @Column
     private Integer authority;
-
-    @Column
+    @Column(name = "work_start")
     private LocalTime workStart;
-
-    @Column
+    @Column(name = "work_end")
     private LocalTime workEnd;
-
-    @Column
+    @Column(name = "rest_start")
     private LocalTime restStart;
-
-    @Column
+    @Column(name = "rest_end")
     private LocalTime restEnd;
-
-    @Column
-    private short isStopped;
-
-    @Column(insertable = false, updatable = false)
+    @Column(name = "is_stopped", nullable = false)
+    private Short isStopped;
+    @Column(name = "created_date", insertable = false, updatable = false)
     private Timestamp createdDate;
-
-    @Column(insertable = false, updatable = true)
+    @Column(name = "updated_date", insertable = false, updatable = true)
     private Timestamp updatedDate;
-
 }
