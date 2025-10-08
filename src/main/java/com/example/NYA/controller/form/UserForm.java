@@ -12,7 +12,7 @@ public class UserForm {
 
     private Integer id;
 
-    private Integer account;
+    private String account;
 
     private String password;
 

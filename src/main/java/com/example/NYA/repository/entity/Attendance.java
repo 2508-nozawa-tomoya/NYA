@@ -3,7 +3,6 @@ package com.example.NYA.repository.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.Interval;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -33,7 +32,7 @@ public class Attendance {
     private Time endTime;
 
     @Column
-    private Interval rest;
+    private Time rest;
 
     @Column
     private int status;

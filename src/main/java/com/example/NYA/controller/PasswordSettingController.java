@@ -1,11 +1,9 @@
 package com.example.NYA.controller;
 
-import com.example.NYA.controller.form.AttendanceForm;
 import com.example.NYA.controller.form.UserForm;
 import com.example.NYA.service.UserService;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -31,8 +29,7 @@ public class PasswordSettingController {
 
     // パスワード変更画面表示
     @GetMapping("/password/change/{id}")
-    public ModelAndView changePassword(@AuthenticationPrincipal LoginUserDetails loginUser,
-                                       @PathVariable String id,
+    public ModelAndView changePassword(@PathVariable String id,
                                        RedirectAttributes attributes) {
 
         List<String> errorMessages = new ArrayList<>();
@@ -52,14 +49,12 @@ public class PasswordSettingController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("change-password");
         mav.addObject("formModel", user);
-        mav.addObject("loginUser", loginUser);
         return mav;
     }
 
     // パスワード変更処理
     @PutMapping("password/update/{id}")
-    public ModelAndView updatePassword(@AuthenticationPrincipal LoginUserDetails loginUser,
-                                       String confirmationPassword,
+    public ModelAndView updatePassword(String confirmationPassword,
                                        @ModelAttribute("formModel") @Validated UserForm userForm,
                                        BindingResult result) {
 
@@ -74,7 +69,6 @@ public class PasswordSettingController {
 
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
-            mav.addObject("loginUser", loginUser);
             mav.addObject("formModel", userForm);
             mav.setViewName("/password-change");
             return mav;

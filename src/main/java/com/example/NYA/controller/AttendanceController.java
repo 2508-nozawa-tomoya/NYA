@@ -4,7 +4,6 @@ import com.example.NYA.controller.form.AttendanceForm;
 import com.example.NYA.service.AttendanceService;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -25,8 +24,7 @@ public class AttendanceController {
 
     // 勤怠編集画面表示
     @GetMapping("/attendance/edit/{id}")
-    public ModelAndView editAttendance(@AuthenticationPrincipal LoginUserDetails loginUser,
-                                       @PathVariable String id,
+    public ModelAndView editAttendance(@PathVariable String id,
                                        RedirectAttributes attributes) {
 
         List<String> errorMessages = new ArrayList<>();
@@ -46,20 +44,18 @@ public class AttendanceController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/attendance/edit");
         mav.addObject("formModel", attendance);
-        mav.addObject("loginUser", loginUser);
         return mav;
     }
 
 
     // 勤怠編集処理
     @PutMapping("/attendance/update/{id}")
-    public ModelAndView updateAttendance(@AuthenticationPrincipal LoginUserDetails loginUser,
-                                         @ModelAttribute("formModel") @Validated AttendanceForm attendanceForm,
+    public ModelAndView updateAttendance(@ModelAttribute("formModel")
+                                         @Validated AttendanceForm attendanceForm,
                                          BindingResult result) {
 
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
-            mav.addObject("loginUser", loginUser);
             mav.addObject("formModel", attendanceForm);
             mav.setViewName("/attendance/edit");
             return mav;

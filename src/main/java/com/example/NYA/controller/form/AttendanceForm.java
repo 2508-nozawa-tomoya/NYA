@@ -3,7 +3,6 @@ package com.example.NYA.controller.form;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.Interval;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -29,7 +28,7 @@ public class AttendanceForm {
     private Time endTime;
 
     @NotNull(message = E0007)
-    private Interval rest;
+    private Time rest;
 
     private int status;
 

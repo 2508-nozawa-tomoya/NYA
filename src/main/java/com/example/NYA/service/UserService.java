@@ -33,11 +33,11 @@ public class UserService {
             userForm.setName(result.getName());
             userForm.setDepartmentId(result.getDepartmentId());
             userForm.setAuthority(result.getAuthority());
-            userForm.setWork_start(result.getWorkStart());
-            userForm.setWork_end(result.getWorkEnd());
+            userForm.setWorkStart(result.getWorkStart());
+            userForm.setWorkEnd(result.getWorkEnd());
             userForm.setRest(result.getRest());
             userForm.setIsStopped(result.getIsStopped());
-            userForm.setCreateDate(result.getCreateDate());
+            userForm.setCreatedDate(result.getCreatedDate());
             userForm.setUpdatedDate(result.getUpdatedDate());
         }
         return userForm;
@@ -83,8 +83,8 @@ public class UserService {
         user.setName(reqUser.getName());
         user.setDepartmentId(reqUser.getDepartmentId());
         user.setAuthority(reqUser.getAuthority());
-        user.setWorkStart(reqUser.getWork_start());
-        user.setWorkEnd(reqUser.getWork_end());
+        user.setWorkStart(reqUser.getWorkStart());
+        user.setWorkEnd(reqUser.getWorkEnd());
         user.setRest(reqUser.getRest());
         user.setIsStopped(reqUser.getIsStopped());
         return user;
