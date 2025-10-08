@@ -27,7 +27,7 @@ public class User {
     @Column(name = "department_id")
     private Integer departmentId;
     @Column
-    private Integer authority;
+    private Short authority;
     @Column(name = "work_start")
     private LocalTime workStart;
     @Column(name = "work_end")
@@ -37,7 +37,7 @@ public class User {
     @Column(name = "rest_end")
     private LocalTime restEnd;
     @Column(name = "is_stopped", nullable = false)
-    private Integer isStopped;
+    private Short isStopped;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
     @Column(name = "updated_date")

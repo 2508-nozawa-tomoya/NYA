@@ -34,9 +34,11 @@
 
         <div class="btn-application">
             <form th:if="${!alreadyApplied}" th:action="@{/application}" method="post">
-                <button type="submit"><span>申請</span></button>
+                <input type="hidden" name="year" th:value="${year}">
+                <input type="hidden" name="month" th:value="${month}">
+                <button type="submit" onclick="return confirmApplication();"><span>申請</span></button>
             </form>
-            <p th:if="${alreadyApplied}" class="applied-message">今月は申請済みです</p>
+            <p th:if="${alreadyApplied}" class="applied-message">申請済みです</p>
         </div>
     </div>
     <div class="month-nav">
@@ -68,19 +70,32 @@
             <td th:text="${#temporals.format(attendance.startRest, 'HH:mm')} + '〜' + ${#temporals.format(attendance.endRest, 'HH:mm')}"></td>
             <!-- 労働時間 -->
             <td th:text="${workingHour[stat.index]}"></td>
+            <td th:text="${overHour[stat.index]}"></td>
             <td th:text="${attendance.comments}"></td>
             <td><a class="edit-link" th:href="@{/edit}">勤怠編集</a></td>
         </tr>
         </tbody>
         <tr>
             <th>合計</th>
-            <th></th>
-            <th></th>
+            <th></th><th></th>
             <th>休憩時間</th>
             <th>労働時間</th>
             <th>超過時間</th>
+            <th></th><th></th>
+        </tr>
+        <tr>
+            <td></td><td></td><td></td>
+            <td th:text="${totalDto.totalRestTimeFormatted}"></td>
+            <td th:text="${totalDto.totalWorkTimeFormatted}"></td>
+            <td th:text="${totalDto.totalOverTimeFormatted}"></td>
+            <td></td><td></td>
         </tr>
     </table>
 </div>
+<script>
+    function confirmApplication() {
+        return confirm("申請しますか？");
+    }
+</script>
 </body>
 </html>

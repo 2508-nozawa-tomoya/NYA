@@ -16,7 +16,8 @@ public class AttendanceForm {
     private LocalDate workDate;
     private LocalTime startTime;
     private LocalTime endTime;
-    private Duration rest;
+    private LocalTime startRest;
+    private LocalTime endRest;
     private Integer status;
     private String comment;
     private LocalDateTime createdDate;

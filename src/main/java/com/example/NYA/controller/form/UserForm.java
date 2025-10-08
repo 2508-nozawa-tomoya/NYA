@@ -11,15 +11,16 @@ import java.time.LocalTime;
 @Setter
 public class UserForm {
     private Integer id;
-    private Integer account;
+    private String account;
     private String password;
     private String name;
     private Integer departmentId;
-    private Integer authority;
+    private Short authority;
     private LocalTime workStart;
     private LocalTime workEnd;
-    private Duration rest;
-    private Integer isStopped;
+    private LocalTime restStart;
+    private LocalTime restEnd;
+    private Short isStopped;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 }
