@@ -75,19 +75,27 @@ body {
     color: #555;
 }
 
-/* ===== ボタン群 ===== */
+/* ===== 勤怠登録・申請ボタン ===== */
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
 .btn-registration a,
 .btn-application button {
     display: inline-block;
     background-color: #007bff;
     color: #fff;
     padding: 8px 16px;
-    margin-right: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.2s;
+    font-weight: bold;
 }
 
 .btn-registration a:hover,
@@ -95,38 +103,21 @@ body {
     background-color: #005fcc;
 }
 
-/* ===== 絞り込みフォーム ===== */
-.filtered-posts form {
-    margin: 15px 0 25px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.filtered-posts input[type="time"] {
-    padding: 4px 8px;
+.applied-message {
+    color: gray;
+    margin: 0.5em 0 0 1em;
     font-size: 14px;
-}
-
-.filtered-posts button {
-    padding: 5px 12px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-}
-
-.filtered-posts button:hover {
-    background-color: #1e7e34;
+    font-style: italic;
 }
 
 /* ===== 月移動ナビゲーション ===== */
 .month-nav {
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 10px;
     font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .month-nav a {
@@ -144,7 +135,10 @@ body {
     font-size: 16px;
     margin-bottom: 10px;
     font-weight: bold;
-    color: #444;
+    color: #004b8d;
+    background-color: #eaf2fb;
+    padding: 8px 12px;
+    border-left: 4px solid #007bff;
 }
 
 /* ===== 勤怠テーブル ===== */
@@ -181,44 +175,9 @@ table.attendance-list tr:nth-child(even) td {
     padding: 4px 10px;
     border-radius: 4px;
     transition: background-color 0.2s;
+    font-weight: bold;
 }
 
 .edit-link:hover {
     background-color: #e0a800;
-}
-
-/* ===== 調整（下余白など） ===== */
-form.btn-application {
-    display: inline-block;
-    margin-left: 10px;
-}
-
-/* ===== 勤怠登録・申請ボタン===== */
-.action-buttons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px; /* ボタン間のすき間 */
-    margin-bottom: 20px; /* 下のテーブルとの間 */
-}
-
-.btn-registration a,
-.btn-application button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.2s;
-}
-
-.btn-registration a:hover,
-.btn-application button:hover {
-    background-color: #005fcc;
-}
-
-.btn-application {
-    margin: 0;
 }

@@ -26,8 +26,10 @@ public class Attendance {
     private LocalTime startTime;
     @Column(name = "end_time")
     private LocalTime endTime;
-    @Column
-    private LocalTime rest;
+    @Column(name = "start_rest")
+    private LocalTime startRest;
+    @Column(name = "end_rest")
+    private LocalTime endRest;
     @Column
     private Integer status;
     @Column

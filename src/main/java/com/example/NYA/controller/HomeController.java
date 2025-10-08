@@ -25,46 +25,48 @@ public class HomeController {
     AttendanceService attendanceService;
 
     @GetMapping("/")
-    public ModelAndView showHome(@RequestParam(value="year", required=false) Integer year,
-                                 @RequestParam(value="month", required=false) Integer month,
-                                 @ModelAttribute("filterForm") FilterForm filterForm,
-                                 HttpSession session) {
+    public ModelAndView showHome(
+            @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "month", required = false) Integer month,
+            HttpSession session) {
+
         ModelAndView mav = new ModelAndView("home");
-        LocalTime startTime = filterForm.getStartTime();
-        LocalTime endTime = filterForm.getEndTime();
-        // 時間指定がない場合の初期値
-        if (startTime == null) startTime = LocalTime.of(0, 0);
-        if (endTime == null) endTime = LocalTime.of(23, 59);
 
         Integer userId = userService.getLoginUserId();
-        // ユーザー情報も取得
         User loginUser = userService.getLoginUserById(userId);
 
-        //一カ月毎に表示させる
+        // 一カ月毎に表示
         LocalDate today = LocalDate.now();
         int targetYear = (year != null) ? year : today.getYear();
         int targetMonth = (month != null) ? month : today.getMonthValue();
         LocalDate monthStart = LocalDate.of(targetYear, targetMonth, 1);
         LocalDate monthEnd = monthStart.withDayOfMonth(monthStart.lengthOfMonth());
 
-        // 前月・翌月の年月を計算
+        // 前月・翌月
         LocalDate prevMonthDate = monthStart.minusMonths(1);
         LocalDate nextMonthDate = monthStart.plusMonths(1);
 
-        List<Attendance> attendanceList = attendanceService.getMonthlyAttendance(userId, monthStart, monthEnd, startTime, endTime);
+        //勤怠データ取得
+        List<Attendance> attendanceList =
+                attendanceService.getMonthlyAttendance(userId, monthStart, monthEnd);
+
         List<String> workingHoursList = attendanceService.getWorkingHours(attendanceList);
 
-        System.out.println("startTime=" + startTime + ", endTime=" + endTime);
+        //申請は月に1回しか押せないようにする
+        boolean alreadyApplied = attendanceList.stream()
+                .anyMatch(a -> a.getStatus() != null && a.getStatus() == 1);
+
+        mav.addObject("alreadyApplied", alreadyApplied);
         mav.addObject("loginUser", loginUser);
         mav.addObject("attendances", attendanceList);
         mav.addObject("workingHour", workingHoursList);
-        mav.addObject("filterForm", filterForm);
         mav.addObject("month", targetMonth);
         mav.addObject("year", targetYear);
         mav.addObject("prevYear", prevMonthDate.getYear());
         mav.addObject("prevMonth", prevMonthDate.getMonthValue());
         mav.addObject("nextYear", nextMonthDate.getYear());
         mav.addObject("nextMonth", nextMonthDate.getMonthValue());
+
         return mav;
     }
 }

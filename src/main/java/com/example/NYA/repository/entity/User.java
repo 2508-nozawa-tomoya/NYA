@@ -19,7 +19,7 @@ public class User {
     private Integer id;
 
     @Column
-    private Integer account;
+    private String account;
     @Column
     private String password;
     @Column
@@ -32,8 +32,10 @@ public class User {
     private LocalTime workStart;
     @Column(name = "work_end")
     private LocalTime workEnd;
-    @Column
-    private LocalTime rest;
+    @Column(name = "rest_start")
+    private LocalTime restStart;
+    @Column(name = "rest_end")
+    private LocalTime restEnd;
     @Column(name = "is_stopped", nullable = false)
     private Integer isStopped;
     @Column(name = "created_date")

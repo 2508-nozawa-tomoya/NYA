@@ -22,7 +22,7 @@ public class UserService {
             return 1; // 仮のuserIdを返しておく
         }
 
-        User user = userRepository.findByAccount(Integer.valueOf(loginName));
+        User user = userRepository.findByAccount(loginName);
         return user.getId();
     }
 
