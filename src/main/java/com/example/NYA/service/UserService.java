@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +24,24 @@ public class UserService {
 
     //ユーザー全件取得
     public List<UserForm> findAll(){
-         List<User> results = userRepository.findAll();
+         List<User> results = userRepository.findAllByOrderByIdAsc();
 
          return setUserForm(results);
     }
 
-    //アカウント（社員番号）ユーザー情報を取得
+    //アカウント（社員番号）でユーザー情報を取得
     public User findByAccount(String account){
         return userRepository.findByAccount(account).orElse(null);
+    }
+
+    //IDでユーザー情報を取得
+    public UserForm findById(Integer id){
+        User result =  userRepository.findById(id).orElse(null);
+
+        List<User> users = new ArrayList<>();
+        users.add(result);
+        List<UserForm> user = setUserForm(users);
+        return user.get(0);
     }
 
     //ユーザー情報登録
@@ -39,6 +50,10 @@ public class UserService {
             //Formの中のパスワードが空でなければハッシュ化
             String encodePassword = passwordEncoder.encode(userForm.getPassword());
             userForm.setPassword(encodePassword);
+        } else{
+            //Formにパスワードが入力されていなければ編集元のパスワードをフォームに設定
+            User user = userRepository.findById(userForm.getId()).orElse(null);
+            userForm.setPassword(user.getPassword());
         }
         User user = setUserEntity(userForm);
         userRepository.save(user);
@@ -86,6 +101,12 @@ public class UserService {
         user.setWorkEnd(userForm.getWorkEnd());
         user.setRestStart(userForm.getRestStart());
         user.setRestEnd(userForm.getRestEnd());
+
+        if(userForm.getId() != null){
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            user.setId(userForm.getId());
+            user.setUpdatedDate(timestamp);
+        }
 
         return user;
     }
