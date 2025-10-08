@@ -13,13 +13,11 @@ import java.time.LocalTime;
 public class UserForm {
     private Integer id;
 
-
     private String account;
 
     private String password;
     private String name;
     private Integer departmentId;
-
 
     private Integer authority;
 
