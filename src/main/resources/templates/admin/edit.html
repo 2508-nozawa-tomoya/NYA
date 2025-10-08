@@ -47,7 +47,7 @@
     </select>
     <br />
     <label>勤務開始</label>
-    <input type="time" name="workStart" th:field="*{workStart}">
+    <input type="time" name="workStart" th:value="${#temporals.format(formModel.workStart, 'HH:mm')}">
     <br />
     <label>勤務終了</label>
     <input type="time" th:field="*{workEnd}">

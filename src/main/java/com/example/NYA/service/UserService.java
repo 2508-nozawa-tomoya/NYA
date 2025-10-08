@@ -5,6 +5,8 @@ import com.example.NYA.repository.UserRepository;
 import com.example.NYA.repository.entity.User;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -32,6 +35,17 @@ public class UserService {
     //アカウント（社員番号）でユーザー情報を取得
     public User findByAccount(String account){
         return userRepository.findByAccount(account).orElse(null);
+    }
+
+    public Integer getLoginUserId() {
+        // 現在の認証情報を取得
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loginName = authentication.getName();
+
+        Optional<User> optionalUser = userRepository.findByAccount(loginName);
+        return optionalUser
+                .map(User::getId)
+                .orElseThrow(() -> new IllegalStateException("ログインユーザーが存在しません: " + loginName));
     }
 
     //IDでユーザー情報を取得

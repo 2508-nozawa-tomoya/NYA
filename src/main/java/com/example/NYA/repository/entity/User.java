@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalTime;
 
 @Entity
-@Table(name= "users")
+@Table(name = "users")
 @Getter
 @Setter
 public class User {
