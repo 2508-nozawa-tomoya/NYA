@@ -1,5 +1,6 @@
 package com.example.NYA.service;
 
+import com.example.NYA.controller.form.AttendanceForm;
 import com.example.NYA.repository.AttendanceRepository;
 import com.example.NYA.repository.entity.Attendance;
 import com.example.NYA.service.dto.TotalDto;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -168,5 +170,29 @@ public class AttendanceService {
         long hours = d.toHours();
         long minutes = d.minusHours(hours).toMinutes();
         return String.format("%02d:%02d", hours, minutes);
+    }
+
+    @Transactional
+    public void saveAttendance(AttendanceForm form) {
+
+        // フォームの内容をエンティティに詰め替える
+        Attendance attendance = new Attendance();
+        attendance.setUserId(form.getUserId());
+        attendance.setWorkDate(form.getWorkDate());
+        attendance.setStartTime(form.getStartTime());
+        attendance.setEndTime(form.getEndTime());
+        attendance.setStartRest(form.getStartRest());
+        attendance.setEndRest(form.getEndRest());
+        attendance.setComments(form.getComment());
+
+        // 初回登録時はステータスを「未申請(0)」に固定
+        attendance.setStatus(0);
+
+        // 登録日時・更新日時を現在時刻に設定
+        attendance.setCreatedDate(LocalDateTime.now());
+        attendance.setUpdatedDate(LocalDateTime.now());
+
+        // DBに保存
+        attendanceRepository.save(attendance);
     }
 }

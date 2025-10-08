@@ -181,3 +181,55 @@ table.attendance-list tr:nth-child(even) td {
 .edit-link:hover {
     background-color: #e0a800;
 }
+
+/* ---------------
+　新規投稿画面
+--------------- */
+.page-new {
+    width: 500px;
+    margin: 70px auto 0;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px 2px #DDD;
+}
+
+.page-new .btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.page-new h1 {
+    margin-bottom: 30px;
+}
+
+.page-new .main-contents {
+    margin-bottom: 30px;
+}
+
+.page-new .main-contents .form-area {
+    margin-bottom: 20px;
+}
+
+.page-new .main-contents .input-area {
+    width: 400px;
+    padding: 7px 10px;
+    border: solid 1px #000;
+    border-radius: 5px;
+}
+
+/* --- 追加ボタン --- */
+.page-new .main-contents .btn-add {
+    width: 70px;
+    padding: 5px;
+    color: #fff;
+    background-color: #3cb371;
+    border-radius: 5px;
+}
+
+/* --- 戻るボタン --- */
+.page-new .btn-return button {
+    width: 70px;
+    padding: 5px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
