@@ -28,6 +28,7 @@ public class AttendanceController {
                                        RedirectAttributes attributes) {
 
         List<String> errorMessages = new ArrayList<>();
+
         if (StringUtils.isBlank(id) || !id.matches("^[0-9]+$")) {
             errorMessages.add(E0019);
             attributes.addFlashAttribute("errorMessages", errorMessages);
@@ -35,6 +36,7 @@ public class AttendanceController {
         }
 
         AttendanceForm attendance = attendanceService.selectAttendanceById(Integer.valueOf(id));
+
         if (attendance == null) {
             errorMessages.add(E0019);
             attributes.addFlashAttribute("errorMessages", errorMessages);

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -40,7 +41,10 @@ public class User {
     private Time workEnd;
 
     @Column
-    private Time rest;
+    private Time restStart;
+
+    @Column
+    private Time restEnd;
 
     @Column
     private short isStopped;
@@ -50,5 +54,8 @@ public class User {
 
     @Column(insertable = false, updatable = true)
     private Timestamp updatedDate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Attendance> attendances;
 
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -35,7 +37,8 @@ public class UserService {
             userForm.setAuthority(result.getAuthority());
             userForm.setWorkStart(result.getWorkStart());
             userForm.setWorkEnd(result.getWorkEnd());
-            userForm.setRest(result.getRest());
+            userForm.setRestStart(result.getRestStart());
+            userForm.setRestEnd(result.getRestEnd());
             userForm.setIsStopped(result.getIsStopped());
             userForm.setCreatedDate(result.getCreatedDate());
             userForm.setUpdatedDate(result.getUpdatedDate());
@@ -69,6 +72,31 @@ public class UserService {
         userRepository.save(user);
     }
 
+    // DBから取得したデータをFormに設定
+    private List<UserForm> setUserForm(List<User> results) {
+
+        List<UserForm> users = new ArrayList<>();
+
+        for (User result : results) {
+            UserForm user = new UserForm();
+            user.setId(result.getId());
+            user.setAccount(result.getAccount());
+            user.setPassword(result.getPassword());
+            user.setName(result.getName());
+            user.setDepartmentId(result.getDepartmentId());
+            user.setAuthority(result.getAuthority());
+            user.setWorkStart(result.getWorkStart());
+            user.setWorkEnd(result.getWorkEnd());
+            user.setRestStart(result.getRestStart());
+            user.setRestEnd(result.getRestEnd());
+            user.setIsStopped(result.getIsStopped());
+            user.setCreatedDate(result.getCreatedDate());
+            user.setUpdatedDate(result.getCreatedDate());
+            users.add(user);
+        }
+        return users;
+    }
+
     // リクエストから取得した情報をentityに設定
     private User setUserEntity(UserForm reqUser) {
 
@@ -85,7 +113,8 @@ public class UserService {
         user.setAuthority(reqUser.getAuthority());
         user.setWorkStart(reqUser.getWorkStart());
         user.setWorkEnd(reqUser.getWorkEnd());
-        user.setRest(reqUser.getRest());
+        user.setRestStart(reqUser.getRestStart());
+        user.setRestEnd(reqUser.getRestEnd());
         user.setIsStopped(reqUser.getIsStopped());
         return user;
     }

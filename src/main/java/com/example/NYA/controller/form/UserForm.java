@@ -26,7 +26,9 @@ public class UserForm {
 
     private Time workEnd;
 
-    private Time rest;
+    private Time restStart;
+
+    private Time restEnd;
 
     private short isStopped;
 

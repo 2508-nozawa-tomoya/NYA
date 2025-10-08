@@ -22,6 +22,7 @@ public class ErrorMessages {
     public static final String E0018 = "無効なアクセスです";
 
     public static final String E0019 = "不正なパラメータが入力されました";
+    public static final String E0020 = "申請を選択してください";
 
     // インスタンス化防止
     private ErrorMessages() {

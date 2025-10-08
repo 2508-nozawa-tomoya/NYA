@@ -19,8 +19,9 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private Date workDate;
@@ -32,7 +33,10 @@ public class Attendance {
     private Time endTime;
 
     @Column
-    private Time rest;
+    private Time startRest;
+
+    @Column
+    private Time endRest;
 
     @Column
     private int status;

@@ -1,42 +1,31 @@
 package com.example.NYA.controller.form;
 
-import jakarta.validation.constraints.NotNull;
+import com.example.NYA.repository.entity.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import static com.example.NYA.error.ErrorMessages.*;
-
 @Getter
 @Setter
-public class AttendanceForm {
+@NoArgsConstructor
+public class UserAttendanceForm {
 
     private Integer id;
-
-    private Integer userId;
-
-    @NotNull(message = E0004)
+    private User user;
     private Date workDate;
-
-    @NotNull(message = E0005)
     private Time startTime;
-
-    @NotNull(message = E0006)
     private Time endTime;
-
     private Time startRest;
-
     private Time endRest;
-
-    private int status;
-
+    private Integer status;
     private String comment;
-
     private Timestamp createDate;
-
     private Timestamp updatedDate;
+
+    private boolean approved;
 
 }
