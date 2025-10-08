@@ -66,7 +66,6 @@ public class SecurityConfig {
     //パスワードの暗号化
     @Bean
     PasswordEncoder passwordEncoder(){
-        System.out.println(new BCryptPasswordEncoder().encode("1234"));
         return new BCryptPasswordEncoder();
     }
 //    @Bean
