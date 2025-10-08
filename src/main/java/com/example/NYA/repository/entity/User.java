@@ -19,7 +19,7 @@ public class User {
     private Integer id;
 
     @Column
-    private Integer account;
+    private String account;
 
     @Column
     private String password;
@@ -31,7 +31,7 @@ public class User {
     private Integer departmentId;
 
     @Column
-    private int authority;
+    private short authority;
 
     @Column
     private Time workStart;
@@ -43,10 +43,10 @@ public class User {
     private Time rest;
 
     @Column
-    private int isStopped;
+    private short isStopped;
 
     @Column(insertable = false, updatable = false)
-    private Timestamp createDate;
+    private Timestamp createdDate;
 
     @Column(insertable = false, updatable = true)
     private Timestamp updatedDate;

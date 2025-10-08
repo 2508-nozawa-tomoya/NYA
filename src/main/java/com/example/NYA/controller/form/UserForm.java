@@ -20,17 +20,17 @@ public class UserForm {
 
     private Integer departmentId;
 
-    private int authority;
+    private short authority;
 
-    private Time work_start;
+    private Time workStart;
 
-    private Time work_end;
+    private Time workEnd;
 
     private Time rest;
 
-    private int isStopped;
+    private short isStopped;
 
-    private Timestamp createDate;
+    private Timestamp createdDate;
 
     private Timestamp updatedDate;
 

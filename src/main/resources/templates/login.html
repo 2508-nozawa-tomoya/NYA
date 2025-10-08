@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <title>勤怠管理システム ログインページ</title>
+</head>
+<body>
+<div class="login-header">
+    <h2 class="login-h2">勤怠管理システム ログインページ</h2>
+</div>
+<div class="main-contents">
+    <div th:text="${errorMessage}"></div>
+    <div th:if="${errorMessages}">
+        <div class="login-errorMessages">
+            <div th:each="errorMessage : ${errorMessages}">
+                <span th:text="${errorMessage}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="login-form">
+        <form th:action="@{/login}" method="post">
+            <label>社員番号</label>
+            <div>
+                <input type="text" name="account" th:value="${account}"/>
+            </div>
+            <label>パスワード</label>
+            <div>
+                <input type="password" name="password"/>
+            </div>
+            <br/>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="submit" value="ログイン"/>
+        </form>
+    </div>
+</div>
+<div class="footer-contents">
+</div>
+</body>
+</html>
