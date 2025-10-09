@@ -1,8 +1,10 @@
 package com.example.NYA.controller;
 
 import com.example.NYA.security.LoginUserDetails;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,8 +13,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class TopController {
 
     @GetMapping("/")
-    public ModelAndView top(@AuthenticationPrincipal LoginUserDetails loginUser){
+    public ModelAndView top(@AuthenticationPrincipal LoginUserDetails loginUser, HttpSession session){
         ModelAndView mav = new ModelAndView();
+
+        //CustomAuthenticationFailureHandlerで出たエラーを拾う
+        String errorMessage = (String) session.getAttribute("errorMessage");
+        if (errorMessage != null) {
+            mav.addObject("errorMessage", errorMessage);
+            session.removeAttribute("errorMessage");
+        }
+
         mav.setViewName("index");
         return mav;
     }

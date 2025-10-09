@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -20,15 +21,15 @@ public class UserForm {
 
     private Integer departmentId;
 
-    private short authority;
+    private Integer authority;
 
-    private Time workStart;
+    private LocalTime workStart;
 
-    private Time workEnd;
+    private LocalTime workEnd;
 
-    private Time restStart;
+    private LocalTime restStart;
 
-    private Time restEnd;
+    private LocalTime restEnd;
 
     private short isStopped;
 

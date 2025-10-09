@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
+    List<User> findAllByOrderByIdAsc();
+
     //アカウント名で検索
     Optional<User> findByAccount(String  account);
 

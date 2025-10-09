@@ -17,33 +17,30 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    // レコード取得(ID)
-    public UserForm selectUserById(Integer id) {
+    //ユーザー全件取得
+    public List<UserForm> findAll(){
+         List<User> results = userRepository.findAllByOrderByIdAsc();
 
-        User result = userRepository.findById(id).orElse(null);
-        UserForm userForm = new UserForm();
+         return setUserForm(results);
+    }
 
-        if (result == null) {
-            return null;
-        } else {
-            userForm.setId(result.getId());
-            userForm.setAccount(result.getAccount());
-            userForm.setPassword(result.getPassword());
-            userForm.setName(result.getName());
-            userForm.setDepartmentId(result.getDepartmentId());
-            userForm.setAuthority(result.getAuthority());
-            userForm.setWorkStart(result.getWorkStart());
-            userForm.setWorkEnd(result.getWorkEnd());
-            userForm.setRestStart(result.getRestStart());
-            userForm.setRestEnd(result.getRestEnd());
-            userForm.setIsStopped(result.getIsStopped());
-            userForm.setCreatedDate(result.getCreatedDate());
-            userForm.setUpdatedDate(result.getUpdatedDate());
-        }
-        return userForm;
+    //アカウント（社員番号）でユーザー情報を取得
+    public User findByAccount(String account){
+        return userRepository.findByAccount(account).orElse(null);
+    }
+
+    //IDでユーザー情報を取得
+    public UserForm findById(Integer id){
+        User result =  userRepository.findById(id).orElse(null);
+
+        List<User> users = new ArrayList<>();
+        users.add(result);
+        List<UserForm> user = setUserForm(users);
+        return user.get(0);
     }
 
     // レコード追加・更新
@@ -71,6 +68,7 @@ public class UserService {
         User user = setUserEntity(userForm);
         userRepository.save(user);
     }
+
 
     // DBから取得したデータをFormに設定
     private List<UserForm> setUserForm(List<User> results) {

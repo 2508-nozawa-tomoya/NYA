@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -32,19 +33,19 @@ public class User {
     private Integer departmentId;
 
     @Column
-    private short authority;
+    private Integer authority;
 
     @Column
-    private Time workStart;
+    private LocalTime workStart;
 
     @Column
-    private Time workEnd;
+    private LocalTime workEnd;
 
     @Column
-    private Time restStart;
+    private LocalTime restStart;
 
     @Column
-    private Time restEnd;
+    private LocalTime restEnd;
 
     @Column
     private short isStopped;

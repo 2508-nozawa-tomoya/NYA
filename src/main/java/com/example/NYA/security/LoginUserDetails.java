@@ -22,9 +22,9 @@ public class LoginUserDetails implements UserDetails {
     private final String account;
     private final String password;
     private final String name;
-    private Integer departmentId;
-    private short authority;
-    private short isStopped;
+    private final Integer departmentId;
+    private final Integer authority;
+    private final short isStopped;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public LoginUserDetails(User user){
