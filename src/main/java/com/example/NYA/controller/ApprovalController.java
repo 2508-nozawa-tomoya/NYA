@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.example.NYA.error.ErrorMessages.E0020;
+import static com.example.NYA.error.ErrorMessages.E0021;
 
 @Controller
 public class ApprovalController {
@@ -58,7 +58,7 @@ public class ApprovalController {
 
         if (approvalForm == null) {
             List<String> errorMessages = new ArrayList<>();
-            errorMessages.add(E0020);
+            errorMessages.add(E0021);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/approval");
         }

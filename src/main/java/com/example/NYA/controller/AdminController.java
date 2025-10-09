@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import static com.example.NYA.error.ErrorMessages.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,13 +77,13 @@ public class AdminController {
                     false,
                     null,
                     null,
-                    "アカウントが重複しています");
+                    E0017);
             result.addError(error);
         }
 
         //パスワードと確認用パスワードの一致チェック
         if(!userForm.getPassword().equals(confirmationPassword)){
-            FieldError error = new FieldError(result.getObjectName(), "password", "パスワードと確認用パスワードが一致しません");
+            FieldError error = new FieldError(result.getObjectName(), "password", E0011);
             result.addError(error);
         }
 
@@ -110,7 +111,7 @@ public class AdminController {
 
         //取得したユーザーIDをチェック
         if(id == null || id.isEmpty() || !id.matches("^[0-9]+$")){
-            errorMessages.add("不正なパラメータが入力されました");
+            errorMessages.add(E0020);
             redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/admin/show");
         }
@@ -119,7 +120,7 @@ public class AdminController {
         UserForm user = userService.findById(Integer.valueOf(id));
 
         if(user == null){
-            errorMessages.add("不正なパラメータが入力されました");
+            errorMessages.add(E0020);
             redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/admin/show");
         }
@@ -127,7 +128,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
 
         if(!model.containsAttribute("formModel")){
-            //modelにformModelがない場合、編集元のユーザー情報を表示(formModelが存在するとき=エラーでフォワード処理した時)
+            //modelにformModelがない場合、編集元のユーザー情報を表示(formModelが存在するとき=エラーでリダイレクト処理した時)
             mav.addObject("formModel", user);
         }
 
@@ -152,13 +153,13 @@ public class AdminController {
                     false,
                     null,
                     null,
-                    "アカウントが重複しています");
+                    E0017);
             result.addError(error);
         }
 
         //パスワードと確認用パスワードの一致チェック
         if((userForm.getPassword() != null) && (!userForm.getPassword().equals(confirmationPassword))){
-            FieldError error = new FieldError(result.getObjectName(), "password", "パスワードと確認用パスワードが一致しません");
+            FieldError error = new FieldError(result.getObjectName(), "password", E0011);
             result.addError(error);
         }
 

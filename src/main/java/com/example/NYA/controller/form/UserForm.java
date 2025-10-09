@@ -20,22 +20,22 @@ public class UserForm {
     private Integer id;
 
     @NotEmpty(message = E0001)
-    @Pattern(regexp = "^(?:$|[0-9]{7})$", message = E0014)
+    @Pattern(regexp = "^(?:$|[0-9]{7})$", message = E0015)
     private String account;
 
     @NotEmpty(message = E0002, groups = {CreateGroup.class})
-    @Pattern(regexp = "^(?:$|[\\x21-\\x7E]{6,20})$", message = E0009)
+    @Pattern(regexp = "^(?:$|[\\x21-\\x7E]{6,20})$", message = E0010)
     private String password;
 
-    @NotEmpty(message = E0011)
-    @Pattern(regexp = "^(?:$|.*[^\\s　].*)$", message = E0011)
-    @Size(min = 0, max = 10, message = "氏名は10文字以下で入力してください")
+    @NotEmpty(message = E0012)
+    @Pattern(regexp = "^(?:$|.*[^\\s　].*)$", message = E0012)
+    @Size(min = 0, max = 10, message = E0016)
     private String name;
 
-    @NotNull(message = E0012)
+    @NotNull(message = E0013)
     private Integer departmentId;
 
-    @NotNull(message = E0013)
+    @NotNull(message = E0014)
     private Integer authority;
 
     @NotNull(message = E0005)
@@ -47,7 +47,7 @@ public class UserForm {
     @NotNull(message = E0007)
     private LocalTime restStart;
 
-    @NotNull(message = E0007)
+    @NotNull(message = E0008)
     private LocalTime restEnd;
 
     private short isStopped;
