@@ -22,7 +22,7 @@ public class UserAttendanceForm {
     private Time startRest;
     private Time endRest;
     private Integer status;
-    private String comment;
+    private String comments;
     private Timestamp createDate;
     private Timestamp updatedDate;
 

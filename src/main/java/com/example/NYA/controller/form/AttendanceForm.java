@@ -30,14 +30,16 @@ public class AttendanceForm {
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime endTime;
 
+    @NotNull(message = E0007)
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime startRest;
 
+    @NotNull(message = E0008)
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime endRest;
 
     private Integer status;
-    private String comment;
+    private String comments;
 
     private Timestamp createdDate;
     private Timestamp updatedDate;

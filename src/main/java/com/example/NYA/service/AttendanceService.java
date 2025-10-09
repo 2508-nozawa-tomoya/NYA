@@ -224,7 +224,7 @@ public class AttendanceService {
             attendanceForm.setStartRest(result.getStartRest());
             attendanceForm.setEndRest(result.getEndRest());
             attendanceForm.setStatus(result.getStatus());
-            attendanceForm.setComment(result.getComment());
+            attendanceForm.setComments(result.getComments());
             attendanceForm.setCreatedDate(result.getCreatedDate());
             attendanceForm.setUpdatedDate(result.getUpdatedDate());
         }
@@ -244,7 +244,7 @@ public class AttendanceService {
         for (UserAttendanceForm userAttendanceForm : selected) {
             Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
             attendance.setStatus(3);
-            attendance.setComment(userAttendanceForm.getComment());
+            attendance.setComments(userAttendanceForm.getComments());
             attendanceRepository.save(attendance);
         }
     }
@@ -254,7 +254,7 @@ public class AttendanceService {
         for (UserAttendanceForm userAttendanceForm : selected) {
             Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
             attendance.setStatus(4);
-            attendance.setComment(userAttendanceForm.getComment());
+            attendance.setComments(userAttendanceForm.getComments());
             attendanceRepository.save(attendance);
         }
     }
@@ -279,7 +279,7 @@ public class AttendanceService {
             attendance.setStartRest(Time.valueOf(result.getStartRest()));
             attendance.setEndRest(Time.valueOf(result.getEndRest()));
             attendance.setStatus(result.getStatus());
-            attendance.setComment(result.getComment());
+            attendance.setComments(result.getComments());
             attendance.setCreateDate(result.getCreatedDate());
             attendance.setUpdatedDate(result.getUpdatedDate());
             attendances.add(attendance);
@@ -305,7 +305,7 @@ public class AttendanceService {
         attendance.setStartRest(reqAttendance.getStartRest());
         attendance.setEndRest(reqAttendance.getEndRest());
         attendance.setStatus(reqAttendance.getStatus());
-        attendance.setComment(reqAttendance.getComment());
+        attendance.setComments(reqAttendance.getComments());
         return attendance;
     }
 }
