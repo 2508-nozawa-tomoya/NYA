@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -16,11 +16,11 @@ public class UserAttendanceForm {
 
     private Integer id;
     private User user;
-    private Date workDate;
-    private Time startTime;
-    private Time endTime;
-    private Time startRest;
-    private Time endRest;
+    private LocalDate workDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private LocalTime startRest;
+    private LocalTime endRest;
     private Integer status;
     private String comment;
     private Timestamp createdDate;

@@ -10,13 +10,6 @@
 <header>
     <div class="header-contents">
         <h1>承認者</h1>
-        <th:block class="loginUser"  th:switch="${loginUser.departmentId}">
-            <span th:case=1 th:text="人事部"></span>
-            <span th:case=2 th:text="営業"></span>
-            <span th:case=3 th:text="技術部"></span>
-        </th:block>
-        /
-        <span class="loginUser" th:text="${loginUser.name}"></span>
         <form class="logout" th:action="@{/logout}" th:method="get">
             <input type="submit" value="ログアウト">
         </form>
@@ -25,6 +18,9 @@
 <main>
     <div class="main-contents">
         <form th:method="put" th:action="@{/approval}" th:object="${formModel}">
+            <div class="errorMessages">
+                <div th:if="${errorMessages != null}" th:each="errorMessage : ${errorMessages}" th:text="${errorMessage}"></div>
+            </div>
             <!-- CSRFトークン -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <th:block th:with="globalIndex=0">

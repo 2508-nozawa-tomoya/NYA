@@ -15,7 +15,7 @@
             <a class="btn-approver" th:if="${loginUser.authority == 0}" th:href="@{/approval}">承認者用</a>
         </div>
         <div class="btn-setting">
-            <a th:href="@{/setting}"><span>設定</span></a>
+            <a th:href="@{/password/change/{id}(id=${userId})}"><span>パスワード変更</span></a>
         </div>
         <form class="form-logout" th:action="@{/logout}" method="post">
             <input class="button-logout" type="submit" value="ログアウト">
@@ -78,7 +78,7 @@
             <td th:text="${workingHour[stat.index]}"></td>
             <td th:text="${overHour[stat.index]}"></td>
             <td th:text="${attendance.comment}"></td>
-            <td><a class="edit-link" th:href="@{/edit}">勤怠編集</a></td>
+            <td><a class="edit-link" th:href="@{/attendance/edit/{id}(id=${attendance.id})}">勤怠編集</a></td>
         </tr>
         </tbody>
         <tr>
