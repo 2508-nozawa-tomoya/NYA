@@ -7,7 +7,7 @@ function CheckDelete(){
 }
 
 function CheckAlter(){
-	if(confirm('変更しますか?')){
+	if(confirm('パスワードを変更しますか?')){
 		return true;
 	} else{
 		return false;

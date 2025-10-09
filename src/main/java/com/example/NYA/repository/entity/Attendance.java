@@ -38,7 +38,7 @@ public class Attendance {
     @Column(name = "end_rest")
     private LocalTime endRest;
 
-    @Column
+    @Column(name = "status", insertable = false, updatable = true)
     private Integer status;
 
     @Column
