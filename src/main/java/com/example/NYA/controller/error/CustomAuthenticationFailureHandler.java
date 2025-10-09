@@ -9,7 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-
+import static com.example.NYA.error.ErrorMessages.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,25 +28,25 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         boolean hasInputError = false;
 
         if(account == null || account.isBlank()){
-            errorMessages.add("社員番号を入力してください");
+            errorMessages.add(E0001);
             hasInputError = true;
         }
 
         if(password == null || password.isBlank()){
-            errorMessages.add("パスワードを入力してください");
+            errorMessages.add(E0002);
             hasInputError = true;
         }
 
         if(!hasInputError){
             if(exception instanceof UsernameNotFoundException){
                 //対応するユーザー情報が存在しない場合の例外
-                errorMessages.add("ログインに失敗しました。");
+                errorMessages.add(E0003);
             } else if(exception instanceof BadCredentialsException){
                 //ユーザーが存在しないまたはパスワードが間違っているなどした時の例外
-                errorMessages.add("ログインに失敗しました。");
+                errorMessages.add(E0003);
             } else if(exception instanceof DisabledException){
                 //UserDetails.isEnabledがfalseを返した時　＝　ユーザーが停止の時の例外
-                errorMessages.add("ログインに失敗しました。");
+                errorMessages.add(E0003);
             }
         }
 

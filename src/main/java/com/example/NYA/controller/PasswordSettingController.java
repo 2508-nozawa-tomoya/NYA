@@ -18,8 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.NYA.error.ErrorMessages.E0010;
-import static com.example.NYA.error.ErrorMessages.E0019;
+import static com.example.NYA.error.ErrorMessages.E0011;
+import static com.example.NYA.error.ErrorMessages.E0020;
 
 @Controller
 public class PasswordSettingController {
@@ -34,20 +34,20 @@ public class PasswordSettingController {
 
         List<String> errorMessages = new ArrayList<>();
         if (StringUtils.isBlank(id) || !id.matches("^[0-9]+$")) {
-            errorMessages.add(E0019);
+            errorMessages.add(E0020);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/");
         }
 
         UserForm user = userService.findById(Integer.valueOf(id));
         if (user == null) {
-            errorMessages.add(E0019);
+            errorMessages.add(E0020);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/");
         }
 
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("change-password");
+        mav.setViewName("/password-change");
         mav.addObject("formModel", user);
         return mav;
     }
@@ -62,7 +62,7 @@ public class PasswordSettingController {
             String password = userForm.getPassword();
             if (!password.matches(confirmationPassword)) {
                 FieldError fieldError = new FieldError(result.getObjectName(),
-                        "password", E0010);
+                        "password", E0011);
                 result.addError(fieldError);
             }
         }

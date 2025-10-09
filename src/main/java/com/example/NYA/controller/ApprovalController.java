@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.example.NYA.error.ErrorMessages.E0020;
+import static com.example.NYA.error.ErrorMessages.E0021;
 
 @Controller
 public class ApprovalController {
@@ -45,8 +45,8 @@ public class ApprovalController {
         }
 
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/approval");
-        mav.addObject("formModel", groupedAttendances);
+        mav.setViewName("/approval/approval");
+        mav.addObject("groupedAttendances", groupedAttendances);
         return mav;
     }
 
@@ -56,9 +56,9 @@ public class ApprovalController {
                                        @RequestParam String action,
                                        RedirectAttributes attributes) {
 
-        if (approvalForm == null) {
+        if (approvalForm.getUserAttendanceFormList() == null) {
             List<String> errorMessages = new ArrayList<>();
-            errorMessages.add(E0020);
+            errorMessages.add(E0021);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/approval");
         }

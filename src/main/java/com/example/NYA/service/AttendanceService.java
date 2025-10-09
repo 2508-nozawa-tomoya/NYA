@@ -201,12 +201,6 @@ public class AttendanceService {
 //        attendanceRepository.save(attendance);
 //    }
 
-    // レコード追加・更新
-    public void saveAttendance(AttendanceForm attendanceForm) {
-        Attendance attendance = setAttendanceEntity(attendanceForm);
-        attendanceRepository.save(attendance);
-    }
-
     // レコード取得(ID)
     public AttendanceForm selectAttendanceById(Integer id) {
 
@@ -237,7 +231,11 @@ public class AttendanceService {
         return setUserAttendanceForm(results);
     }
 
-
+    // レコード追加・更新
+    public void saveAttendance(AttendanceForm attendanceForm) {
+        Attendance attendance = setAttendanceEntity(attendanceForm);
+        attendanceRepository.save(attendance);
+    }
 
     // レコード更新(一括承認)
     public void approve(List<UserAttendanceForm> selected) {
@@ -280,7 +278,7 @@ public class AttendanceService {
             attendance.setEndRest(Time.valueOf(result.getEndRest()));
             attendance.setStatus(result.getStatus());
             attendance.setComments(result.getComments());
-            attendance.setCreateDate(result.getCreatedDate());
+            attendance.setCreatedDate(result.getCreatedDate());
             attendance.setUpdatedDate(result.getUpdatedDate());
             attendances.add(attendance);
         }

@@ -17,6 +17,11 @@
             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             <div th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}"></div>
+            <div th:if="${#fields.hasErrors('authority')}" th:errors="*{authority}"></div>
+            <div th:if="${#fields.hasErrors('workStart')}" th:errors="*{workStart}"></div>
+            <div th:if="${#fields.hasErrors('workEnd')}" th:errors="*{workEnd}"></div>
+            <div th:if="${#fields.hasErrors('restStart')}" th:errors="*{restStart}"></div>
+            <div th:if="${#fields.hasErrors('restEnd')}" th:errors="*{restEnd}"></div>
         </div>
         <!--入力フォーム-->
         <labele>社員番号(半角数字7桁)</labele>

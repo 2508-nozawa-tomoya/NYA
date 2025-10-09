@@ -4,6 +4,8 @@ import com.example.NYA.controller.form.UserForm;
 import com.example.NYA.repository.entity.User;
 import com.example.NYA.security.LoginUserDetails;
 import com.example.NYA.service.UserService;
+import com.example.NYA.validation.CreateGroup;
+import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import static com.example.NYA.error.ErrorMessages.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,9 +65,9 @@ public class AdminController {
      * 新規ユーザー登録処理
      */
     @PostMapping("/add")
-    public ModelAndView addUser(@ModelAttribute("formModel") @Validated UserForm userForm,
+    public ModelAndView addUser(@ModelAttribute("formModel") @Validated({Default.class, CreateGroup.class}) UserForm userForm,
                                 BindingResult result,
-                                String confirmationPassword,
+                                @RequestParam("confirmationPassword") String confirmationPassword,
                                 RedirectAttributes redirectAttributes){
         //ユーザーの重複チェック
         User user = userService.findByAccount(userForm.getAccount());
@@ -74,13 +77,13 @@ public class AdminController {
                     false,
                     null,
                     null,
-                    "アカウントが重複しています");
+                    E0017);
             result.addError(error);
         }
 
         //パスワードと確認用パスワードの一致チェック
         if(!userForm.getPassword().equals(confirmationPassword)){
-            FieldError error = new FieldError(result.getObjectName(), "password", "パスワードと確認用パスワードが一致しません");
+            FieldError error = new FieldError(result.getObjectName(), "password", E0011);
             result.addError(error);
         }
 
@@ -108,7 +111,7 @@ public class AdminController {
 
         //取得したユーザーIDをチェック
         if(id == null || id.isEmpty() || !id.matches("^[0-9]+$")){
-            errorMessages.add("不正なパラメータが入力されました");
+            errorMessages.add(E0020);
             redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/admin/show");
         }
@@ -117,7 +120,7 @@ public class AdminController {
         UserForm user = userService.findById(Integer.valueOf(id));
 
         if(user == null){
-            errorMessages.add("不正なパラメータが入力されました");
+            errorMessages.add(E0020);
             redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/admin/show");
         }
@@ -125,7 +128,7 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
 
         if(!model.containsAttribute("formModel")){
-            //modelにformModelがない場合、編集元のユーザー情報を表示(formModelが存在するとき=エラーでフォワード処理した時)
+            //modelにformModelがない場合、編集元のユーザー情報を表示(formModelが存在するとき=エラーでリダイレクト処理した時)
             mav.addObject("formModel", user);
         }
 
@@ -137,10 +140,10 @@ public class AdminController {
      * ユーザー編集機能
      */
     @PutMapping("/update/{id}")
-    public ModelAndView userUpdate(@ModelAttribute("formModel") @Validated UserForm userForm,
+    public ModelAndView userUpdate(@ModelAttribute("formModel") @Validated({Default.class}) UserForm userForm,
                                    BindingResult result,
                                    @PathVariable Integer id,
-                                   String confirmationPassword,
+                                   @RequestParam("confirmationPassword") String confirmationPassword,
                                    RedirectAttributes redirectAttributes){
         //ユーザーの重複チェック
         User user = userService.findByAccount(userForm.getAccount());
@@ -150,13 +153,13 @@ public class AdminController {
                     false,
                     null,
                     null,
-                    "アカウントが重複しています");
+                    E0017);
             result.addError(error);
         }
 
         //パスワードと確認用パスワードの一致チェック
         if((userForm.getPassword() != null) && (!userForm.getPassword().equals(confirmationPassword))){
-            FieldError error = new FieldError(result.getObjectName(), "password", "パスワードと確認用パスワードが一致しません");
+            FieldError error = new FieldError(result.getObjectName(), "password", E0011);
             result.addError(error);
         }
 
@@ -168,6 +171,17 @@ public class AdminController {
 
         userForm.setId(id);
         userService.saveUser(userForm);
+
+        return new ModelAndView("redirect:/admin/show");
+    }
+
+    /*
+     * ユーザー停止/有効切り替え
+     */
+    @PutMapping("/change/{id}")
+    public ModelAndView changeIsStopped(@PathVariable Integer id,
+                                        @RequestParam("isStopped") short isStopped){
+        userService.changeIsStopped(id, isStopped);
 
         return new ModelAndView("redirect:/admin/show");
     }

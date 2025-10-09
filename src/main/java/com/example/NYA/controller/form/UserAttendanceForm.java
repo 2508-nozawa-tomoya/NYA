@@ -22,10 +22,21 @@ public class UserAttendanceForm {
     private Time startRest;
     private Time endRest;
     private Integer status;
-    private String comments;
-    private Timestamp createDate;
+    private String comment;
+    private Timestamp createdDate;
     private Timestamp updatedDate;
 
     private boolean approved;
+
+    public String getStatusLabel() {
+        if (status == null) return "";
+        return switch (status) {
+            case 0 -> "未申請";
+            case 1 -> "申請中";
+            case 2 -> "承認済";
+            case 3 -> "差戻し";
+            default -> "";
+        };
+    }
 
 }

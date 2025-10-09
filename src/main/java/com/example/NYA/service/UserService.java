@@ -83,6 +83,12 @@ public class UserService {
         userRepository.save(user);
     }
 
+    //ユーザー停止/有効切り替え
+    public void changeIsStopped(Integer id, short isStopped){
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        userRepository.changeIsStopped(id, isStopped, ts);
+    }
+
 
     // DBから取得したデータをFormに設定
     private List<UserForm> setUserForm(List<User> results) {
@@ -103,7 +109,7 @@ public class UserService {
             user.setRestEnd(result.getRestEnd());
             user.setIsStopped(result.getIsStopped());
             user.setCreatedDate(result.getCreatedDate());
-            user.setUpdatedDate(result.getCreatedDate());
+            user.setUpdatedDate(result.getUpdatedDate());
             users.add(user);
         }
         return users;

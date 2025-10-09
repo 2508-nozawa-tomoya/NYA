@@ -6,6 +6,14 @@ function CheckDelete(){
 	}
 }
 
+function CheckAlter(){
+	if(confirm('変更しますか?')){
+		return true;
+	} else{
+		return false;
+	}
+}
+
 function toggleAll(masterCheckbox) {
     // グループ識別子を取得
     const groupId = masterCheckbox.getAttribute('data-group');
@@ -15,4 +23,20 @@ function toggleAll(masterCheckbox) {
 
     // マスターの状態に応じてON/OFF
     checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
+}
+
+function CheckStop(){
+	if(confirm('ユーザーを停止しますか？')){
+		return true;
+	} else{
+		return false;
+	}
+}
+
+function CheckValid(){
+	if(confirm('ユーザーを有効にしますか？')){
+		return true;
+	} else{
+		return false;
+	}
 }
