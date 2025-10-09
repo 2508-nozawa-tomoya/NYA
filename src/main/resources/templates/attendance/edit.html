@@ -24,7 +24,7 @@
 </header>
 <main>
     <div class="main-contents">
-        <form method="put" th:action="@{/attendance/update/{id}(id=${formModel.id}}" th:object="${formModel}">
+        <form method="put" th:action="@{/attendance/update/{id}(id=${formModel.id})}" th:object="${formModel}">
             <div class="errorMessages">
                 <div th:if="${#fields.hasErrors('workDate')}" th:errors="*{workDate}"></div>
                 <div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></div>

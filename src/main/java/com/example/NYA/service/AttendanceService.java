@@ -37,7 +37,7 @@ public class AttendanceService {
             attendanceForm.setEndRest(result.getEndRest());
             attendanceForm.setStatus(result.getStatus());
             attendanceForm.setComment(result.getComment());
-            attendanceForm.setCreateDate(result.getCreateDate());
+            attendanceForm.setCreatedDate(result.getCreatedDate());
             attendanceForm.setUpdatedDate(result.getUpdatedDate());
         }
         return attendanceForm;
@@ -96,7 +96,7 @@ public class AttendanceService {
             attendance.setEndRest(result.getEndRest());
             attendance.setStatus(result.getStatus());
             attendance.setComment(result.getComment());
-            attendance.setCreateDate(result.getCreateDate());
+            attendance.setCreatedDate(result.getCreatedDate());
             attendance.setUpdatedDate(result.getUpdatedDate());
             attendances.add(attendance);
         }

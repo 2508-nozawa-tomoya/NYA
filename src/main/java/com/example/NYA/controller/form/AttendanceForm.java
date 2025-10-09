@@ -35,7 +35,7 @@ public class AttendanceForm {
 
     private String comment;
 
-    private Timestamp createDate;
+    private Timestamp createdDate;
 
     private Timestamp updatedDate;
 

@@ -10,7 +10,9 @@
     <div th:text="${errorMessage}"></div>
     <h1 th:text="${#authentication.name}"></h1>
     <p>これは仮のホーム画面です</p>
+    <a th:href="@{/password/change/{id}(id=${userId})}">パスワード変更画面</a>
     <a th:href="@{/admin/show}">システム管理者画面</a>
+    <a th:href="@{/approval}">承認者画面</a>
     <form class="logout" th:action="@{/logout}" th:method="get">
         <input type="submit" value="ログアウト">
     </form>

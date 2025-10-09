@@ -45,7 +45,7 @@ public class Attendance {
     private String comment;
 
     @Column(insertable = false, updatable = false)
-    private Timestamp createDate;
+    private Timestamp createdDate;
 
     @Column(insertable = false, updatable = true)
     private Timestamp updatedDate;
