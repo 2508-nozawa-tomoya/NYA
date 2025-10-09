@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.NYA.error.ErrorMessages.E0019;
+import static com.example.NYA.error.ErrorMessages.E0020;
 
 @Controller
 public class AttendanceController {
@@ -30,7 +30,7 @@ public class AttendanceController {
         List<String> errorMessages = new ArrayList<>();
 
         if (StringUtils.isBlank(id) || !id.matches("^[0-9]+$")) {
-            errorMessages.add(E0019);
+            errorMessages.add(E0020);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/");
         }
@@ -38,7 +38,7 @@ public class AttendanceController {
         AttendanceForm attendance = attendanceService.selectAttendanceById(Integer.valueOf(id));
 
         if (attendance == null) {
-            errorMessages.add(E0019);
+            errorMessages.add(E0020);
             attributes.addFlashAttribute("errorMessages", errorMessages);
             return new ModelAndView("redirect:/");
         }
