@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <script th:src="@{/js/main.js}"></script>
+    <title>システム管理者画面</title>
+</head>
+<body>
+<header>
+    <div>
+        <h2>システム管理者画面</h2>
+        <th:block  th:switch="${loginUser.departmentId}">
+            <span th:case=1 th:text="人事部"></span>
+            <span th:case=2 th:text="営業"></span>
+            <span th:case=3 th:text="技術部"></span>
+        </th:block>
+        /
+        <span class="loginUser" th:text="${loginUser.account}"></span>
+    </div>
+</header>
+<main >
+    <div>
+        <div class="errorMessages" th:if="${errorMessages != null}">
+            <div th:each="errorMessage : ${errorMessages}" th:text="${errorMessages}"></div>
+        </div>
+
+        <a th:href="@{/admin/new}">新規ユーザー登録</a>
+
+        <table class="user-table" border="1">
+            <caption class="title">ユーザー 一覧</caption>
+            <tr>
+                <th>編集</th>
+                <th>社員番号</th>
+                <th>氏名</th>
+                <th>部署</th>
+                <th>権限</th>
+                <th>勤務開始</th>
+                <th>勤務終了</th>
+                <th>休憩開始</th>
+                <th>休憩終了</th>
+                <th>登録日時<br/><hr>更新日時</th>
+                <th>有効/停止</th>
+            </tr>
+            <tr class="user" th:each="user : ${users}">
+                <td class="td-edit">
+                    <a th:href="@{/admin/edit/{id}(id=${user.id})}">
+                        <input type="button" value="編集"/>
+                    </a>
+                </td>
+                <td class="td-idAccount"><!-- 社員番号表示 -->
+                    <span name="account" th:text="${user.account}"></span>
+                </td>
+                <td class="td-name"><!-- 氏名表示 -->
+                    <span name="name" th:text="${user.name}"></span>
+                </td>
+                <td class="td-department"><!-- 部署表示 -->
+                    <th:block th:switch="${user.departmentId}">
+                        <span th:case=1 th:text="人事部"></span>
+                        <span th:case=2 th:text="営業"></span>
+                        <span th:case=3 th:text="技術部"></span>
+                    </th:block>
+                </td>
+                <td>
+                    <th:block th:switch="${user.authority}">
+                        <span th:case=0 th:text="承認者"></span>
+                        <span th:case=1 th:text="一般"></span>
+                    </th:block>
+                </td>
+                <td>
+                    <span name="workStart" th:text="${user.workStart}"></span>
+                </td>
+                <td>
+                    <span name="workEnd" th:text="${user.workEnd}"></span>
+                </td>
+                <td>
+                    <span name="restStart" th:text="${user.restStart}"></span>
+                </td>
+                <td>
+                    <span name="restEnd" th:text="${user.restEnd}"></span>
+                </td>
+                <td class="td-date">
+                    <span th:text="${#dates.format(user.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span><br/>
+                    <hr>
+                    <span th:text="${#dates.format(user.updatedDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                </td>
+                <td class="td-status">
+                    <th:block th:switch="${user.isStopped}">
+                        <span class="valid-status" th:case=0 th:text="有効"></span>
+                        <span class="stop-status" th:case=1 th:text="停止中"></span>
+                    </th:block>
+                    <th:block th:if="${loginUser.id != user.id}" th:switch="${user.isStopped}">
+                        <form th:case=0 class="stop-button" th:action="@{/change/{id}(id=${user.id})}" th:method="put" onSubmit="return CheckAlter()">
+                            <input type="hidden" name="isStopped" value="1"/>
+                            <input type="submit" value="停止"/>
+                        </form>
+                        <form th:case=1 class="valid-button" th:action="@{/change/{id}(id=${user.id})}" th:method="put" onSubmit="return CheckAlter()">
+                            <input type="hidden" name="isStopped" value="0"/>
+                            <input type="submit" value="有効"/>
+                        </form>
+                    </th:block>
+                </span>
+                </td>
+            </tr>
+        </table>
+        <form th:action="@{/}">
+            <input type="submit" value="戻る"/>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

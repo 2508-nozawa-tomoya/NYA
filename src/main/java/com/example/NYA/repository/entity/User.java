@@ -3,17 +3,18 @@ package com.example.NYA.repository.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.Interval;
 
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
 public class User {
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,5 +55,8 @@ public class User {
 
     @Column(insertable = false, updatable = true)
     private Timestamp updatedDate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Attendance> attendances;
 
 }

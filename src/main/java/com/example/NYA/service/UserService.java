@@ -3,15 +3,14 @@ package com.example.NYA.service;
 import com.example.NYA.controller.form.UserForm;
 import com.example.NYA.repository.UserRepository;
 import com.example.NYA.repository.entity.User;
-import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.PreparedStatement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,34 +57,44 @@ public class UserService {
         return user.get(0);
     }
 
-    //ユーザー情報登録
-    public void saveUser(UserForm userForm){
-        if(!StringUtils.isBlank(userForm.getPassword())){
-            //Formの中のパスワードが空でなければハッシュ化
-            String encodePassword = passwordEncoder.encode(userForm.getPassword());
-            userForm.setPassword(encodePassword);
-        } else{
-            //Formにパスワードが入力されていなければ編集元のパスワードをフォームに設定
+    // レコード追加・更新
+    public void save(UserForm userForm) {
+
+        boolean isNewUser = userForm.getId() == null;
+        boolean changeIsStopped = false;
+        User dbUser = null;
+
+        if (!isNewUser) {
+            dbUser = userRepository.findById(userForm.getId()).orElse(null);
+        }
+        if (dbUser != null && dbUser.getIsStopped() != userForm.getIsStopped()) {
+            changeIsStopped = true;
+        }
+        if (isNewUser || !userForm.getPassword().isBlank() && !changeIsStopped) {
+            String rawPassword = userForm.getPassword();
+            String encodedPassword = passwordEncoder.encode(rawPassword);
+            userForm.setPassword(encodedPassword);
+        } else {
             User user = userRepository.findById(userForm.getId()).orElse(null);
             userForm.setPassword(user.getPassword());
         }
+
         User user = setUserEntity(userForm);
         userRepository.save(user);
     }
 
-    /*
-     * DBから取得した情報をFormに移し替え
-     */
-    private List<UserForm> setUserForm(List<User> results){
-        List<UserForm> users = new ArrayList<>();
-        for(int i = 0; i < results.size(); i++){
-            UserForm user = new UserForm();
-            User result = results.get(i);
 
+    // DBから取得したデータをFormに設定
+    private List<UserForm> setUserForm(List<User> results) {
+
+        List<UserForm> users = new ArrayList<>();
+
+        for (User result : results) {
+            UserForm user = new UserForm();
             user.setId(result.getId());
             user.setAccount(result.getAccount());
-            user.setName(result.getName());
             user.setPassword(result.getPassword());
+            user.setName(result.getName());
             user.setDepartmentId(result.getDepartmentId());
             user.setAuthority(result.getAuthority());
             user.setWorkStart(result.getWorkStart());
@@ -94,34 +103,31 @@ public class UserService {
             user.setRestEnd(result.getRestEnd());
             user.setIsStopped(result.getIsStopped());
             user.setCreatedDate(result.getCreatedDate());
-            user.setUpdatedDate(result.getUpdatedDate());
-
+            user.setUpdatedDate(result.getCreatedDate());
             users.add(user);
         }
         return users;
     }
 
-    /*
-     * フォームに入力された情報をEntityに詰め替え
-     */
-    private User setUserEntity(UserForm userForm){
+    // リクエストから取得した情報をentityに設定
+    private User setUserEntity(UserForm reqUser) {
+
         User user = new User();
-        user.setAccount(userForm.getAccount());
-        user.setPassword(userForm.getPassword());
-        user.setName(userForm.getName());
-        user.setDepartmentId(userForm.getDepartmentId());
-        user.setAuthority(userForm.getAuthority());
-        user.setWorkStart(userForm.getWorkStart());
-        user.setWorkEnd(userForm.getWorkEnd());
-        user.setRestStart(userForm.getRestStart());
-        user.setRestEnd(userForm.getRestEnd());
 
-        if(userForm.getId() != null){
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            user.setId(userForm.getId());
-            user.setUpdatedDate(timestamp);
+        if (reqUser.getId() != null) {
+            user.setId(reqUser.getId());
+            user.setUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));
         }
-
+        user.setAccount(reqUser.getAccount());
+        user.setPassword(reqUser.getPassword());
+        user.setName(reqUser.getName());
+        user.setDepartmentId(reqUser.getDepartmentId());
+        user.setAuthority(reqUser.getAuthority());
+        user.setWorkStart(reqUser.getWorkStart());
+        user.setWorkEnd(reqUser.getWorkEnd());
+        user.setRestStart(reqUser.getRestStart());
+        user.setRestEnd(reqUser.getRestEnd());
+        user.setIsStopped(reqUser.getIsStopped());
         return user;
     }
 

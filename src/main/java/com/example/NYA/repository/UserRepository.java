@@ -14,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     //アカウント名で検索
     Optional<User> findByAccount(String account);
+
+    // 部署IDで検索
+    List<User> findByDepartmentId(Integer departmentId);
 }

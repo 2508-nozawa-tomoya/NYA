@@ -1,15 +1,20 @@
 package com.example.NYA.service;
 
 import com.example.NYA.controller.form.AttendanceForm;
+import com.example.NYA.controller.form.UserAttendanceForm;
 import com.example.NYA.repository.AttendanceRepository;
 import com.example.NYA.repository.entity.Attendance;
 import com.example.NYA.service.dto.TotalDto;
 import jakarta.transaction.Transactional;
+import com.example.NYA.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +23,7 @@ import java.util.List;
 
 @Service
 public class AttendanceService {
+
     @Autowired
     AttendanceRepository attendanceRepository;
 
@@ -172,27 +178,135 @@ public class AttendanceService {
         return String.format("%02d:%02d", hours, minutes);
     }
 
-    @Transactional
-    public void saveAttendance(AttendanceForm form) {
+//    @Transactional
+//    public void saveAttendance(AttendanceForm form) {
+//
+//        // フォームの内容をエンティティに詰め替える
+//        Attendance attendance = new Attendance();
+//        attendance.setUserId(form.getUserId());
+//        attendance.setWorkDate(form.getWorkDate());
+//        attendance.setStartTime(form.getStartTime());
+//        attendance.setEndTime(form.getEndTime());
+//        attendance.setStartRest(form.getStartRest());
+//        attendance.setEndRest(form.getEndRest());
+//        attendance.setComment(form.getComment());
+//
+//        // 初回登録時はステータスを「未申請(0)」に固定
+//        attendance.setStatus(0);
+//
+//        // 登録日時・更新日時を現在時刻に設定
+//        attendance.setCreatedDate(LocalDateTime.now());
+//        attendance.setUpdatedDate(LocalDateTime.now());
+//
+//        // DBに保存
+//        attendanceRepository.save(attendance);
+//    }
 
-        // フォームの内容をエンティティに詰め替える
-        Attendance attendance = new Attendance();
-        attendance.setUserId(form.getUserId());
-        attendance.setWorkDate(form.getWorkDate());
-        attendance.setStartTime(form.getStartTime());
-        attendance.setEndTime(form.getEndTime());
-        attendance.setStartRest(form.getStartRest());
-        attendance.setEndRest(form.getEndRest());
-        attendance.setComments(form.getComment());
-
-        // 初回登録時はステータスを「未申請(0)」に固定
-        attendance.setStatus(0);
-
-        // 登録日時・更新日時を現在時刻に設定
-        attendance.setCreatedDate(LocalDateTime.now());
-        attendance.setUpdatedDate(LocalDateTime.now());
-
-        // DBに保存
+    // レコード追加・更新
+    public void saveAttendance(AttendanceForm attendanceForm) {
+        Attendance attendance = setAttendanceEntity(attendanceForm);
         attendanceRepository.save(attendance);
+    }
+
+    // レコード取得(ID)
+    public AttendanceForm selectAttendanceById(Integer id) {
+
+        Attendance result = attendanceRepository.findById(id).orElse(null);
+        AttendanceForm attendanceForm = new AttendanceForm();
+
+        if (result == null) {
+            return null;
+        } else {
+            attendanceForm.setId(result.getId());
+            attendanceForm.setUserId(result.getUser().getId());
+            attendanceForm.setWorkDate(result.getWorkDate());
+            attendanceForm.setStartTime(result.getStartTime());
+            attendanceForm.setEndTime(result.getEndTime());
+            attendanceForm.setStartRest(result.getStartRest());
+            attendanceForm.setEndRest(result.getEndRest());
+            attendanceForm.setStatus(result.getStatus());
+            attendanceForm.setComment(result.getComment());
+            attendanceForm.setCreatedDate(result.getCreatedDate());
+            attendanceForm.setUpdatedDate(result.getUpdatedDate());
+        }
+        return attendanceForm;
+    }
+
+    // レコード取得(ステータス)
+    public List<UserAttendanceForm> selectAttendanceByStatus(Integer departmentId, int status) {
+        List<Attendance> results = attendanceRepository.findAttendanceByStatus(departmentId, status);
+        return setUserAttendanceForm(results);
+    }
+
+
+
+    // レコード更新(一括承認)
+    public void approve(List<UserAttendanceForm> selected) {
+        for (UserAttendanceForm userAttendanceForm : selected) {
+            Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
+            attendance.setStatus(3);
+            attendance.setComment(userAttendanceForm.getComment());
+            attendanceRepository.save(attendance);
+        }
+    }
+
+    // レコード更新(一括差戻し)
+    public void reject(List<UserAttendanceForm> selected) {
+        for (UserAttendanceForm userAttendanceForm : selected) {
+            Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
+            attendance.setStatus(4);
+            attendance.setComment(userAttendanceForm.getComment());
+            attendanceRepository.save(attendance);
+        }
+    }
+
+    // レコード削除
+    public void deleteAttendance(Integer id) {
+        attendanceRepository.deleteById(id);
+    }
+
+    // DBから取得したデータをFormに設定
+    private List<UserAttendanceForm> setUserAttendanceForm(List<Attendance> results) {
+
+        List<UserAttendanceForm> attendances = new ArrayList<>();
+
+        for (Attendance result : results) {
+            UserAttendanceForm attendance = new UserAttendanceForm();
+            attendance.setId(result.getId());
+            attendance.setUser(result.getUser());
+            attendance.setWorkDate(Date.valueOf(result.getWorkDate()));
+            attendance.setStartTime(Time.valueOf(result.getStartTime()));
+            attendance.setEndTime(Time.valueOf(result.getEndTime()));
+            attendance.setStartRest(Time.valueOf(result.getStartRest()));
+            attendance.setEndRest(Time.valueOf(result.getEndRest()));
+            attendance.setStatus(result.getStatus());
+            attendance.setComment(result.getComment());
+            attendance.setCreateDate(result.getCreatedDate());
+            attendance.setUpdatedDate(result.getUpdatedDate());
+            attendances.add(attendance);
+        }
+        return attendances;
+    }
+
+    // リクエストから取得した情報をentityに設定
+    private Attendance setAttendanceEntity(AttendanceForm reqAttendance) {
+
+        Attendance attendance = new Attendance();
+        User user = new User();
+        user.setId(reqAttendance.getUserId());
+
+        if (reqAttendance.getId() != null) {
+            attendance.setId(reqAttendance.getId());
+            attendance.setUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));
+        }
+        attendance.setUser(user);
+        attendance.setWorkDate(reqAttendance.getWorkDate());
+        attendance.setStartTime(reqAttendance.getStartTime());
+        attendance.setEndTime(reqAttendance.getEndTime());
+        attendance.setStartRest(reqAttendance.getStartRest());
+        attendance.setEndRest(reqAttendance.getEndRest());
+        attendance.setStatus(reqAttendance.getStatus());
+        attendance.setComment(reqAttendance.getComment());
+        return attendance;
     }
 }
