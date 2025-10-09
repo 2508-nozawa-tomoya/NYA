@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +29,8 @@ public class HomeController {
     public ModelAndView showHome(
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "month", required = false) Integer month,
-            @AuthenticationPrincipal LoginUserDetails loginUser) {
+            @AuthenticationPrincipal LoginUserDetails loginUser,
+            HttpSession session) {
 
         ModelAndView mav = new ModelAndView("home");
         //ログイン中のユーザーの勤怠情報を把握するため
@@ -56,6 +58,13 @@ public class HomeController {
         // --- 月ナビゲーション ---
         LocalDate prev = monthStart.minusMonths(1);
         LocalDate next = monthStart.plusMonths(1);
+
+        // --- CustomAuthenticationFailureHandlerで出たエラーを拾う ---
+        String errorMessage = (String) session.getAttribute("errorMessage");
+        if (errorMessage != null) {
+            mav.addObject("errorMessage", errorMessage);
+            session.removeAttribute("errorMessage");
+        }
 
         // --- Viewにセット ---
         mav.addObject("loginUser", loginUser);
@@ -98,7 +107,7 @@ public class HomeController {
         // 申請更新
         for (Attendance a : attendanceList) {
             a.setStatus(1);
-            a.setUpdatedDate(LocalDateTime.now());
+            a.setUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));
         }
         attendanceService.saveAll(attendanceList);
 

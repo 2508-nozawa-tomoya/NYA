@@ -6,9 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import static com.example.NYA.error.ErrorMessages.*;
 
 @Getter
 @Setter
@@ -17,28 +18,28 @@ public class AttendanceForm {
     private Integer id;
     private Integer userId;
 
+    @NotNull(message = E0004)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "日付を入力してください")
     private LocalDate workDate;
 
+    @NotNull(message = E0005)
     @DateTimeFormat(pattern = "HH:mm")
-    @NotNull(message = "開始時間を入力してください")
     private LocalTime startTime;
 
+    @NotNull(message = E0006)
     @DateTimeFormat(pattern = "HH:mm")
-    @NotNull(message = "終了時間を入力してください")
     private LocalTime endTime;
 
     @DateTimeFormat(pattern = "HH:mm")
-    @NotNull(message = "休憩開始時間を入力してください")
     private LocalTime startRest;
 
     @DateTimeFormat(pattern = "HH:mm")
-    @NotNull(message = "休憩終了時間を入力してください")
     private LocalTime endRest;
 
-    private Short status;
+    private Integer status;
     private String comment;
-    private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
+
+    private Timestamp createdDate;
+    private Timestamp updatedDate;
+
 }

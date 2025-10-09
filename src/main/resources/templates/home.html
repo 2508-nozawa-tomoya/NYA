@@ -9,7 +9,7 @@
 <div class="header-contents">
     <div class="header" th:if="${loginUser != null}">
         <div class="admin-wrap">
-            <a class="btn-admin" th:if="${loginUser.departmentId == 1}" th:href="@{/admin}">管理者用</a>
+            <a class="btn-admin" th:if="${loginUser.departmentId == 1}" th:href="@{/admin/show}">管理者用</a>
         </div>
         <div class="approver-wrap">
             <a class="btn-approver" th:if="${loginUser.authority == 0}" th:href="@{/approver}">承認者用</a>
@@ -24,7 +24,7 @@
 </div>
 <div class="main-contents">
     <h1 class="title">勤怠管理システム</h1>
-
+    <div th:text="${errorMessage}"></div>
     <div class="user-info">
         社員番号：<span th:text="${loginUser.account}"></span>
     </div>
@@ -74,7 +74,7 @@
             <td th:text="${#temporals.format(attendance.startTime, 'HH:mm')}"></td>
             <td th:text="${#temporals.format(attendance.endTime, 'HH:mm')}"></td>
             <td th:text="${#temporals.format(attendance.startRest, 'HH:mm')} + '〜' + ${#temporals.format(attendance.endRest, 'HH:mm')}"></td>
-
+            <!-- 労働時間 -->
             <td th:text="${workingHour[stat.index]}"></td>
             <td th:text="${overHour[stat.index]}"></td>
             <td th:text="${attendance.comments}"></td>
