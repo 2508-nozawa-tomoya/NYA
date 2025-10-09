@@ -4,6 +4,8 @@ import com.example.NYA.controller.form.UserForm;
 import com.example.NYA.repository.entity.User;
 import com.example.NYA.security.LoginUserDetails;
 import com.example.NYA.service.UserService;
+import com.example.NYA.validation.CreateGroup;
+import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -62,9 +64,9 @@ public class AdminController {
      * 新規ユーザー登録処理
      */
     @PostMapping("/add")
-    public ModelAndView addUser(@ModelAttribute("formModel") @Validated UserForm userForm,
+    public ModelAndView addUser(@ModelAttribute("formModel") @Validated({Default.class, CreateGroup.class}) UserForm userForm,
                                 BindingResult result,
-                                String confirmationPassword,
+                                @RequestParam("confirmationPassword") String confirmationPassword,
                                 RedirectAttributes redirectAttributes){
         //ユーザーの重複チェック
         User user = userService.findByAccount(userForm.getAccount());
@@ -137,10 +139,10 @@ public class AdminController {
      * ユーザー編集機能
      */
     @PutMapping("/update/{id}")
-    public ModelAndView userUpdate(@ModelAttribute("formModel") @Validated UserForm userForm,
+    public ModelAndView userUpdate(@ModelAttribute("formModel") @Validated({Default.class}) UserForm userForm,
                                    BindingResult result,
                                    @PathVariable Integer id,
-                                   String confirmationPassword,
+                                   @RequestParam("confirmationPassword") String confirmationPassword,
                                    RedirectAttributes redirectAttributes){
         //ユーザーの重複チェック
         User user = userService.findByAccount(userForm.getAccount());
@@ -168,6 +170,17 @@ public class AdminController {
 
         userForm.setId(id);
         userService.saveUser(userForm);
+
+        return new ModelAndView("redirect:/admin/show");
+    }
+
+    /*
+     * ユーザー停止/有効切り替え
+     */
+    @PutMapping("/change/{id}")
+    public ModelAndView changeIsStopped(@PathVariable Integer id,
+                                        @RequestParam("isStopped") short isStopped){
+        userService.changeIsStopped(id, isStopped);
 
         return new ModelAndView("redirect:/admin/show");
     }

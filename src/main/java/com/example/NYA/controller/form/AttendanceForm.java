@@ -1,17 +1,19 @@
 package com.example.NYA.controller.form;
 
+import com.example.NYA.validation.WithinWorkingHours;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
-
+import java.time.LocalDate;
+import java.time.LocalTime;
 import static com.example.NYA.error.ErrorMessages.*;
 
 @Getter
 @Setter
+@WithinWorkingHours
 public class AttendanceForm {
 
     private Integer id;
@@ -19,24 +21,27 @@ public class AttendanceForm {
     private Integer userId;
 
     @NotNull(message = E0004)
-    private Date workDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate workDate;
 
     @NotNull(message = E0005)
-    private Time startTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime startTime;
 
     @NotNull(message = E0006)
-    private Time endTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime endTime;
 
-    private Time startRest;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime startRest;
 
-    private Time endRest;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime endRest;
 
-    private int status;
-
+    private Integer status;
     private String comment;
 
     private Timestamp createdDate;
-
     private Timestamp updatedDate;
 
 }

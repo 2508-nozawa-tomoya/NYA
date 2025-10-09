@@ -17,9 +17,6 @@
         </th:block>
         /
         <span class="loginUser" th:text="${loginUser.account}"></span>
-        <form class="logout" th:action="@{/logout}" th:method="get">
-            <input type="submit" value="ログアウト">
-        </form>
     </div>
 </header>
 <main >
@@ -93,11 +90,11 @@
                         <span class="stop-status" th:case=1 th:text="停止中"></span>
                     </th:block>
                     <th:block th:if="${loginUser.id != user.id}" th:switch="${user.isStopped}">
-                        <form th:case=0 class="stop-button" th:action="@{/change/{id}(id=${user.id})}" th:method="put" onSubmit="return CheckAlter()">
+                        <form th:case=0 class="stop-button" th:action="@{/admin/change/{id}(id=${user.id})}" th:method="put" onSubmit="return CheckStop()">
                             <input type="hidden" name="isStopped" value="1"/>
                             <input type="submit" value="停止"/>
                         </form>
-                        <form th:case=1 class="valid-button" th:action="@{/change/{id}(id=${user.id})}" th:method="put" onSubmit="return CheckAlter()">
+                        <form th:case=1 class="valid-button" th:action="@{/admin/change/{id}(id=${user.id})}" th:method="put" onSubmit="return CheckValid()">
                             <input type="hidden" name="isStopped" value="0"/>
                             <input type="submit" value="有効"/>
                         </form>

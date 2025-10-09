@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "attendances")
@@ -23,31 +23,31 @@ public class Attendance {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column
-    private Date workDate;
+    @Column(name = "work_date")
+    private LocalDate workDate;
+
+    @Column(name = "start_time")
+    private LocalTime startTime;
+
+    @Column(name = "end_time")
+    private LocalTime endTime;
+
+    @Column(name = "start_rest")
+    private LocalTime startRest;
+
+    @Column(name = "end_rest")
+    private LocalTime endRest;
 
     @Column
-    private Time startTime;
-
-    @Column
-    private Time endTime;
-
-    @Column
-    private Time startRest;
-
-    @Column
-    private Time endRest;
-
-    @Column
-    private int status;
+    private Integer status;
 
     @Column
     private String comment;
 
-    @Column(insertable = false, updatable = false)
+    @Column(name = "created_date", insertable = false, updatable = false)
     private Timestamp createdDate;
 
-    @Column(insertable = false, updatable = true)
+    @Column(name = "updated_date", insertable = false, updatable = true)
     private Timestamp updatedDate;
 
 }

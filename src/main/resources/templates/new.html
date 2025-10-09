@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>勤怠登録</title>
+</head>
+<body>
+<div class="page-new">
+    <h1>勤怠登録</h1>
+
+    <div class="main-contents">
+        <form method="post" action="/add" th:object="${attendanceForm}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <div class="form-row">
+                <div class="form-item">
+                    <label>【日付】</label>
+                    <input type="date" class="input-area" th:field="*{workDate}" />
+                </div>
+
+                <div class="form-item">
+                    <label>【開始】</label>
+                    <input type="time" class="input-area" th:field="*{startTime}" />
+                </div>
+
+                <div class="form-item">
+                    <label>【終了】</label>
+                    <input type="time" class="input-area" th:field="*{endTime}" />
+                </div>
+
+                <div class="form-item">
+                    <label>【休憩開始】</label>
+                    <input type="time" class="input-area" th:field="*{startRest}" />
+                </div>
+
+                <div class="form-item">
+                    <label>【休憩終了】</label>
+                    <input type="time" class="input-area" th:field="*{endRest}" />
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-add" type="submit">登録</button>
+                <div class="btn-return">
+                    <a th:href="@{/}">戻る</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
