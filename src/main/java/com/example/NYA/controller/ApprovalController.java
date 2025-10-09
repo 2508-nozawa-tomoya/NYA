@@ -45,8 +45,8 @@ public class ApprovalController {
         }
 
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/approval");
-        mav.addObject("formModel", groupedAttendances);
+        mav.setViewName("/approval/approval");
+        mav.addObject("groupedAttendances", groupedAttendances);
         return mav;
     }
 
@@ -56,7 +56,7 @@ public class ApprovalController {
                                        @RequestParam String action,
                                        RedirectAttributes attributes) {
 
-        if (approvalForm == null) {
+        if (approvalForm.getUserAttendanceFormList() == null) {
             List<String> errorMessages = new ArrayList<>();
             errorMessages.add(E0021);
             attributes.addFlashAttribute("errorMessages", errorMessages);

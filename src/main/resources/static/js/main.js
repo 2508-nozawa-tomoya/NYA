@@ -6,6 +6,14 @@ function CheckDelete(){
 	}
 }
 
+function CheckAlter(){
+	if(confirm('変更しますか?')){
+		return true;
+	} else{
+		return false;
+	}
+}
+
 function toggleAll(masterCheckbox) {
     // グループ識別子を取得
     const groupId = masterCheckbox.getAttribute('data-group');

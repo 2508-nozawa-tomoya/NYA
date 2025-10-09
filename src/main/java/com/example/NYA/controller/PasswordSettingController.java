@@ -47,7 +47,7 @@ public class PasswordSettingController {
         }
 
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("change-password");
+        mav.setViewName("/password-change");
         mav.addObject("formModel", user);
         return mav;
     }

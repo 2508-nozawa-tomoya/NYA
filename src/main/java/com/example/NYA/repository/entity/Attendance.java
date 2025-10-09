@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -51,4 +49,5 @@ public class Attendance {
 
     @Column(name = "updated_date", insertable = false, updatable = true)
     private Timestamp updatedDate;
+
 }

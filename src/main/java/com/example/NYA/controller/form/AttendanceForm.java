@@ -15,7 +15,9 @@ import static com.example.NYA.error.ErrorMessages.*;
 @Setter
 @WithinWorkingHours
 public class AttendanceForm {
+
     private Integer id;
+
     private Integer userId;
 
     @NotNull(message = E0004)

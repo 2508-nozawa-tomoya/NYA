@@ -7,16 +7,16 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import static com.example.NYA.error.ErrorMessages.*;
-
 
 import java.sql.Timestamp;
-
 import java.time.LocalTime;
+
+import static com.example.NYA.error.ErrorMessages.*;
 
 @Getter
 @Setter
 public class UserForm {
+
     private Integer id;
 
     @NotEmpty(message = E0001)
