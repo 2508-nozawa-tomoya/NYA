@@ -12,7 +12,7 @@
             <a class="btn-admin" th:if="${loginUser.departmentId == 1}" th:href="@{/admin/show}">管理者用</a>
         </div>
         <div class="approver-wrap">
-            <a class="btn-approver" th:if="${loginUser.authority == 0}" th:href="@{/approver}">承認者用</a>
+            <a class="btn-approver" th:if="${loginUser.authority == 0}" th:href="@{/approval}">承認者用</a>
         </div>
         <div class="btn-setting">
             <a th:href="@{/setting}"><span>設定</span></a>

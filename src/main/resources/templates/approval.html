@@ -10,9 +10,9 @@
 <header>
     <div class="header-contents">
         <h1>承認者</h1>
-        <th:block class="loginUser" th:switch="${loginUser.departmentId}">
+        <th:block class="loginUser"  th:switch="${loginUser.departmentId}">
             <span th:case=1 th:text="人事部"></span>
-            <span th:case=2 th:text="営業部"></span>
+            <span th:case=2 th:text="営業"></span>
             <span th:case=3 th:text="技術部"></span>
         </th:block>
         /
