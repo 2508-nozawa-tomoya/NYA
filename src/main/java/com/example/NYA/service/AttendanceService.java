@@ -59,10 +59,9 @@ public class AttendanceService {
                     workDuration = workDuration.minus(restDuration);
                 }
 
-                // 結果フォーマット
-                long h = workDuration.toHours();
-                long m = workDuration.toMinutesPart();
-                result.add(String.format("%d:%02d", h, m));
+                //フォーマット指定
+                result.add(formatDuration(workDuration));
+
             } else {
                 result.add("-");
             }

@@ -1,35 +1,44 @@
 package com.example.NYA.validation;
 
-import com.example.NYA.repository.entity.Attendance;
+import com.example.NYA.controller.form.AttendanceForm;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 import java.time.Duration;
 import java.time.LocalTime;
 
-public class WithinWorkingHoursValidator implements ConstraintValidator<WithinWorkingHours, Attendance> {
+public class WithinWorkingHoursValidator implements ConstraintValidator<WithinWorkingHours, AttendanceForm> {
+
+    private int minWorkHours;
+    private int restHours;
 
     @Override
-    public void initialize(WithinWorkingHours annotation) {
+    public void initialize(WithinWorkingHours constraintAnnotation) {
+        this.minWorkHours = constraintAnnotation.minWorkHours();
+        this.restHours = constraintAnnotation.maxRestHours();
     }
 
     @Override
-    public boolean isValid(Attendance attendance, ConstraintValidatorContext context) {
-        // nullチェック
-        if (attendance == null) return true;
-        if (attendance.getStartTime() == null || attendance.getEndTime() == null) return true;
+    public boolean isValid(AttendanceForm form, ConstraintValidatorContext context) {
+        if (form == null) return true;
 
-        // 休憩時間
-        Duration rest = Duration.ZERO;
-        if (attendance.getStartRest() != null && attendance.getEndRest() != null) {
-            rest = Duration.between(attendance.getStartRest(), attendance.getEndRest());
-        }
+        LocalTime start = form.getStartTime();
+        LocalTime end = form.getEndTime();
+        LocalTime startRest = form.getStartRest();
+        LocalTime endRest = form.getEndRest();
 
-        // 勤務時間 = 終了 - 開始 - 休憩
-        Duration work = Duration.between(attendance.getStartTime(), attendance.getEndTime()).minus(rest);
+        if (start == null || end == null || startRest == null || endRest == null) return true;
 
-        // 8時間未満ならNG
-        Duration minWork = Duration.ofHours(8);
-        return !work.minus(minWork).isNegative(); // work >= 8時間ならtrue
+        Duration rest = Duration.between(startRest, endRest);
+        if (rest.isNegative()) return true;
+
+        Duration work = Duration.between(start, end).minus(rest);
+        if (work.isNegative()) return true;
+
+        Duration minWork = Duration.ofHours(minWorkHours);
+        Duration requiredRest = Duration.ofHours(restHours);
+
+        // どちらか違反なら false
+        return (work.compareTo(minWork) >= 0) && rest.equals(requiredRest);
     }
 }
