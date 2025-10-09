@@ -58,7 +58,7 @@ public class UserService {
     }
 
     // レコード追加・更新
-    public void save(UserForm userForm) {
+    public void saveUser(UserForm userForm) {
 
         boolean isNewUser = userForm.getId() == null;
         boolean changeIsStopped = false;

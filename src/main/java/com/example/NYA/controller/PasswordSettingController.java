@@ -39,7 +39,7 @@ public class PasswordSettingController {
             return new ModelAndView("redirect:/");
         }
 
-        UserForm user = userService.selectUserById(Integer.valueOf(id));
+        UserForm user = userService.findById(Integer.valueOf(id));
         if (user == null) {
             errorMessages.add(E0019);
             attributes.addFlashAttribute("errorMessages", errorMessages);
@@ -74,7 +74,7 @@ public class PasswordSettingController {
             return mav;
         }
 
-        userService.save(userForm);
+        userService.saveUser(userForm);
         return new ModelAndView("redirect:/");
     }
 

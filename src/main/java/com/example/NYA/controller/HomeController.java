@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -107,7 +108,7 @@ public class HomeController {
         // 申請更新
         for (Attendance a : attendanceList) {
             a.setStatus(1);
-            a.setUpdatedDate(LocalDateTime.now());
+            a.setUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));
         }
         attendanceService.saveAll(attendanceList);
 
