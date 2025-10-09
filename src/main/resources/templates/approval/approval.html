@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/style.css}" rel="styleSheet">
@@ -15,7 +15,7 @@
             <span th:case=2 th:text="営業"></span>
             <span th:case=3 th:text="技術部"></span>
         </th:block>
-        /
+
         <span class="loginUser" th:text="${loginUser.name}"></span>
         <form class="logout" th:action="@{/logout}" th:method="get">
             <input type="submit" value="ログアウト">
@@ -72,8 +72,8 @@
                             <td th:text="${attendance.statusLabel}"></td>
                             <td>
                                 <input type="text"
-                                       th:name="|userAttendanceFormList[${currentIndex}].comment|"
-                                       th:value="${attendance.comment}"/>
+                                       th:name="|userAttendanceFormList[${currentIndex}].comments|"
+                                       th:value="${attendance.comments}"/>
                             </td>
                         </tr>
                         </tbody>

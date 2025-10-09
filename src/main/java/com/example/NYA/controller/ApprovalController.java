@@ -45,7 +45,8 @@ public class ApprovalController {
         }
 
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/approval/approval");
+        mav.setViewName("approval/approval");
+        mav.addObject("loginUser", loginUser);
         mav.addObject("groupedAttendances", groupedAttendances);
         return mav;
     }

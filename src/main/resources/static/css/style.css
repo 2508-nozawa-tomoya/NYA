@@ -313,3 +313,15 @@ table.attendance-list tr:nth-child(even) td {
 .page-new .btn-return a:hover {
     background-color: #5a6268;
 }
+
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.error-global {
+     color: red;
+     font-size: 13px;
+     margin-top: 4px;
+}
