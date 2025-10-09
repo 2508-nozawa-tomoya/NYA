@@ -5,7 +5,6 @@ import com.example.NYA.security.LoginUserDetails;
 import com.example.NYA.service.AttendanceService;
 import com.example.NYA.service.UserService;
 import com.example.NYA.service.dto.TotalDto;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

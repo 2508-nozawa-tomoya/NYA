@@ -15,5 +15,6 @@ public @interface WithinWorkingHours {
     String message() default "所定時間内で設定してください";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    String minHours() default "8";
+    int minWorkHours() default 8;   // 8時間未満NG
+    int maxRestHours() default 1;   // 1時間超NG
 }

@@ -24,9 +24,11 @@
 </div>
 <div class="main-contents">
     <h1 class="title">勤怠管理システム</h1>
+
     <div class="user-info">
         社員番号：<span th:text="${loginUser.account}"></span>
     </div>
+
     <div class="action-buttons">
         <div class="btn-registration">
             <a th:href="@{/new}"><span>勤怠登録</span></a>
@@ -38,17 +40,21 @@
                 <input type="hidden" name="month" th:value="${month}">
                 <button type="submit" onclick="return confirmApplication();"><span>申請</span></button>
             </form>
+
             <p th:if="${alreadyApplied}" class="applied-message">申請済みです</p>
         </div>
     </div>
+
     <div class="month-nav">
         <a th:href="@{'/?year=' + ${prevYear} + '&month=' + ${prevMonth}}">＜先月</a>
         <span th:text="${month} + '月'"></span>
         <a th:href="@{'/?year=' + ${nextYear} + '&month=' + ${nextMonth}}">来月＞</a>
     </div>
+
     <div class="application-status">
         <p th:text="${month} + '月申請状況：' + ${status}"></p>
     </div>
+
     <table class="attendance-list">
         <thead>
         <tr>
@@ -68,7 +74,7 @@
             <td th:text="${#temporals.format(attendance.startTime, 'HH:mm')}"></td>
             <td th:text="${#temporals.format(attendance.endTime, 'HH:mm')}"></td>
             <td th:text="${#temporals.format(attendance.startRest, 'HH:mm')} + '〜' + ${#temporals.format(attendance.endRest, 'HH:mm')}"></td>
-            <!-- 労働時間 -->
+
             <td th:text="${workingHour[stat.index]}"></td>
             <td th:text="${overHour[stat.index]}"></td>
             <td th:text="${attendance.comments}"></td>
