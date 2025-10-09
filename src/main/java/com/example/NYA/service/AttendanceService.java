@@ -4,17 +4,15 @@ import com.example.NYA.controller.form.AttendanceForm;
 import com.example.NYA.controller.form.UserAttendanceForm;
 import com.example.NYA.repository.AttendanceRepository;
 import com.example.NYA.repository.entity.Attendance;
+import com.example.NYA.repository.entity.User;
 import com.example.NYA.service.dto.TotalDto;
 import jakarta.transaction.Transactional;
-import com.example.NYA.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -177,30 +175,6 @@ public class AttendanceService {
         return String.format("%02d:%02d", hours, minutes);
     }
 
-//    @Transactional
-//    public void saveAttendance(AttendanceForm form) {
-//
-//        // フォームの内容をエンティティに詰め替える
-//        Attendance attendance = new Attendance();
-//        attendance.setUserId(form.getUserId());
-//        attendance.setWorkDate(form.getWorkDate());
-//        attendance.setStartTime(form.getStartTime());
-//        attendance.setEndTime(form.getEndTime());
-//        attendance.setStartRest(form.getStartRest());
-//        attendance.setEndRest(form.getEndRest());
-//        attendance.setComment(form.getComment());
-//
-//        // 初回登録時はステータスを「未申請(0)」に固定
-//        attendance.setStatus(0);
-//
-//        // 登録日時・更新日時を現在時刻に設定
-//        attendance.setCreatedDate(LocalDateTime.now());
-//        attendance.setUpdatedDate(LocalDateTime.now());
-//
-//        // DBに保存
-//        attendanceRepository.save(attendance);
-//    }
-
     // レコード取得(ID)
     public AttendanceForm selectAttendanceById(Integer id) {
 
@@ -271,11 +245,11 @@ public class AttendanceService {
             UserAttendanceForm attendance = new UserAttendanceForm();
             attendance.setId(result.getId());
             attendance.setUser(result.getUser());
-            attendance.setWorkDate(Date.valueOf(result.getWorkDate()));
-            attendance.setStartTime(Time.valueOf(result.getStartTime()));
-            attendance.setEndTime(Time.valueOf(result.getEndTime()));
-            attendance.setStartRest(Time.valueOf(result.getStartRest()));
-            attendance.setEndRest(Time.valueOf(result.getEndRest()));
+            attendance.setWorkDate(result.getWorkDate());
+            attendance.setStartTime(result.getStartTime());
+            attendance.setEndTime(result.getEndTime());
+            attendance.setStartRest(result.getStartRest());
+            attendance.setEndRest(result.getEndRest());
             attendance.setStatus(result.getStatus());
             attendance.setComments(result.getComments());
             attendance.setCreatedDate(result.getCreatedDate());

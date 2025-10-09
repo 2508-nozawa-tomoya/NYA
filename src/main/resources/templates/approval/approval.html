@@ -25,6 +25,9 @@
 <main>
     <div class="main-contents">
         <form th:method="put" th:action="@{/approval}" th:object="${formModel}">
+            <div class="errorMessages">
+                <div th:if="${errorMessages != null}" th:each="errorMessage : ${errorMessages}" th:text="${errorMessage}"></div>
+            </div>
             <!-- CSRFトークン -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <th:block th:with="globalIndex=0">

@@ -81,6 +81,7 @@ public class HomeController {
         mav.addObject("prevMonth", prev.getMonthValue());
         mav.addObject("nextYear", next.getYear());
         mav.addObject("nextMonth", next.getMonthValue());
+        mav.addObject("userId", loginUser.getId());
 
         return mav;
     }
