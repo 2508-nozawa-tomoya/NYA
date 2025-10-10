@@ -2,7 +2,9 @@ package com.example.NYA.controller;
 
 import com.example.NYA.controller.form.UserForm;
 import com.example.NYA.service.UserService;
+import com.example.NYA.validation.CreateGroup;
 import io.micrometer.common.util.StringUtils;
+import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -55,10 +57,11 @@ public class PasswordSettingController {
     // パスワード変更処理
     @PutMapping("password/update/{id}")
     public ModelAndView updatePassword(String confirmationPassword,
-                                       @ModelAttribute("formModel") @Validated UserForm userForm,
+                                       @ModelAttribute("formModel")
+                                       @Validated({Default.class, CreateGroup.class}) UserForm userForm,
                                        BindingResult result) {
 
-        if (userForm.getPassword() != null) {
+        if (!result.hasErrors() && userForm.getPassword() != null) {
             String password = userForm.getPassword();
             if (!password.matches(confirmationPassword)) {
                 FieldError fieldError = new FieldError(result.getObjectName(),

@@ -387,3 +387,103 @@ table.attendance-list tr:nth-child(even) td {
      font-size: 13px;
      margin-top: 4px;
 }
+
+/* ==============================
+   承認画面
+============================== */
+
+/* ユーザー単位のブロック */
+.approval-user-block {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    background-color: #fdfdfd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* 社員情報 */
+.approval-user-info {
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.approval-user-info label {
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+/* details > summary を追加 */
+.approval-user-block details > summary {
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #eaf2fb;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* テーブル */
+table.approval-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+table.approval-table th,
+table.approval-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+table.approval-table th {
+    background-color: #004b8d;
+    color: white;
+}
+
+table.approval-table tr:nth-child(even) td {
+    background-color: #f5f9fc;
+}
+
+input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+}
+
+/* ボタン */
+.approval-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+button[type="submit"][value="approve"],
+button[type="submit"][value="reject"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button[type="submit"][value="reject"] {
+    background-color: #e67e22;
+}
+
+button[type="submit"]:hover {
+    opacity: 0.9;
+}
+
+/* エラーメッセージ */
+.errorMessages {
+    color: #c0392b;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
