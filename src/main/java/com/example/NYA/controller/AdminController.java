@@ -105,6 +105,7 @@ public class AdminController {
     @GetMapping("/edit/{id}")
     public ModelAndView userEdit(@PathVariable String id,
                                  RedirectAttributes redirectAttributes,
+                                 @AuthenticationPrincipal LoginUserDetails loginUser,
                                  Model model){
 
         List<String> errorMessages = new ArrayList<>();
@@ -133,6 +134,7 @@ public class AdminController {
         }
 
         mav.setViewName("admin/edit");
+        mav.addObject("loginUser", loginUser);
         return mav;
     }
 
