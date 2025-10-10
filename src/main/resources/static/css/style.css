@@ -939,7 +939,7 @@ table.approval-table tr:nth-child(even) td {
     background-color: #f5f9fc;
 }
 
-input[type="text"] {
+.approval-input {
     width: 100%;
     box-sizing: border-box;
     padding: 6px 8px;
