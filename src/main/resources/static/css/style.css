@@ -314,6 +314,72 @@ table.attendance-list tr:nth-child(even) td {
     background-color: #5a6268;
 }
 
+/* ==============================
+   ログインページ
+============================== */
+.login {
+  width: 400px;
+  margin: 16px auto;
+  font-size: 16px;
+}
+
+.login-header,
+.login p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.login-header {
+  background: #004b8d;
+  padding: 20px;
+  font-size: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.login-container {
+  background: #ebebeb;
+  padding: 12px;
+}
+
+.login p {
+  padding: 12px;
+}
+
+.login input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+}
+
+.login input[type="submit"] {
+  background: #007bff;
+  border-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.login input[type="submit"]:hover {
+  background: #004b8d;
+}
+
+
+.loginError {
+    text-align:center;
+    font-size: 12px;
+    margin-top: 3px;
+    color: red;
+}
+
+
 .error {
     color: red;
     font-size: 13px;
