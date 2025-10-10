@@ -62,15 +62,9 @@ public class SecurityConfig {
         return http.build();
     }
 
-//    //パスワードの暗号化
-//    @Bean
-//    PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-
+    //パスワードの暗号化
     @Bean
     PasswordEncoder passwordEncoder(){
-        // 暗号化しない・そのまま比較するモード
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 }
