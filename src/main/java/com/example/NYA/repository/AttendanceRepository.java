@@ -17,7 +17,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
             "FROM Attendance a INNER JOIN a.user u " +
             "WHERE u.departmentId = :departmentId " +
             "AND a.status = :status " +
-            "ORDER BY u.account DESC, a.workDate DESC")
+            "ORDER BY u.account ASC, a.workDate ASC")
     List<Attendance> findAttendanceByStatus(@Param("departmentId") Integer departmentId,
                                             @Param("status") int status);
 
