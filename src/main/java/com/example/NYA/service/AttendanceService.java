@@ -192,7 +192,7 @@ public class AttendanceService {
             attendanceForm.setStartRest(result.getStartRest());
             attendanceForm.setEndRest(result.getEndRest());
             attendanceForm.setStatus(result.getStatus());
-            attendanceForm.setComments(result.getComments());
+            attendanceForm.setComment(result.getComment());
             attendanceForm.setCreatedDate(result.getCreatedDate());
             attendanceForm.setUpdatedDate(result.getUpdatedDate());
         }
@@ -215,8 +215,8 @@ public class AttendanceService {
     public void approve(List<UserAttendanceForm> selected) {
         for (UserAttendanceForm userAttendanceForm : selected) {
             Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
-            attendance.setStatus(3);
-            attendance.setComments(userAttendanceForm.getComments());
+            attendance.setStatus(2);
+            attendance.setComment(userAttendanceForm.getComment());
             attendanceRepository.save(attendance);
         }
     }
@@ -225,8 +225,8 @@ public class AttendanceService {
     public void reject(List<UserAttendanceForm> selected) {
         for (UserAttendanceForm userAttendanceForm : selected) {
             Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
-            attendance.setStatus(4);
-            attendance.setComments(userAttendanceForm.getComments());
+            attendance.setStatus(3);
+            attendance.setComment(userAttendanceForm.getComment());
             attendanceRepository.save(attendance);
         }
     }
@@ -251,7 +251,7 @@ public class AttendanceService {
             attendance.setStartRest(result.getStartRest());
             attendance.setEndRest(result.getEndRest());
             attendance.setStatus(result.getStatus());
-            attendance.setComments(result.getComments());
+            attendance.setComment(result.getComment());
             attendance.setCreatedDate(result.getCreatedDate());
             attendance.setUpdatedDate(result.getUpdatedDate());
             attendances.add(attendance);
@@ -277,7 +277,7 @@ public class AttendanceService {
         attendance.setStartRest(reqAttendance.getStartRest());
         attendance.setEndRest(reqAttendance.getEndRest());
         attendance.setStatus(reqAttendance.getStatus());
-        attendance.setComments(reqAttendance.getComments());
+        attendance.setComment(reqAttendance.getComment());
         return attendance;
     }
 }
