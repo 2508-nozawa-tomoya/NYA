@@ -27,7 +27,7 @@ public class AddController {
 
     @PostMapping("/add")
     public ModelAndView addMessage(
-            @ModelAttribute("attendanceForm") @Validated AttendanceForm attendanceForm,
+            @Validated @ModelAttribute("attendanceForm") AttendanceForm attendanceForm,
             BindingResult result,
             @AuthenticationPrincipal LoginUserDetails loginUser) {
 

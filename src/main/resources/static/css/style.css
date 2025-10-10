@@ -379,6 +379,19 @@ table.attendance-list tr:nth-child(even) td {
     color: red;
 }
 
+
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.error-global {
+     color: red;
+     font-size: 13px;
+     margin-top: 4px;
+}
+
 /* ==============================
    承認画面
 ============================== */
