@@ -92,7 +92,7 @@ public class AttendanceService {
     //「すでに申請中の勤怠があるか？」を判定する。
     public boolean isAlreadyApplied(List<Attendance> list) {
         return list.stream()
-                .anyMatch(a -> a.getStatus() != null && a.getStatus() == 1);
+                .anyMatch(a -> a.getStatus() != null && (a.getStatus() == 1 || a.getStatus() == 2));
     }
 
     //1日ごとの「残業時間」を求める（8時間を超えた分だけ）。
@@ -215,7 +215,7 @@ public class AttendanceService {
     public void approve(List<UserAttendanceForm> selected) {
         for (UserAttendanceForm userAttendanceForm : selected) {
             Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
-            attendance.setStatus(3);
+            attendance.setStatus(2);
             attendance.setComment(userAttendanceForm.getComment());
             attendanceRepository.save(attendance);
         }
@@ -225,7 +225,7 @@ public class AttendanceService {
     public void reject(List<UserAttendanceForm> selected) {
         for (UserAttendanceForm userAttendanceForm : selected) {
             Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
-            attendance.setStatus(4);
+            attendance.setStatus(3);
             attendance.setComment(userAttendanceForm.getComment());
             attendanceRepository.save(attendance);
         }
@@ -280,5 +280,4 @@ public class AttendanceService {
         attendance.setComment(reqAttendance.getComment());
         return attendance;
     }
-
 }

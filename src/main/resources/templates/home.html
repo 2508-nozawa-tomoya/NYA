@@ -31,7 +31,8 @@
 
     <div class="action-buttons">
         <div class="btn-registration">
-            <a th:href="@{/new}"><span>勤怠登録</span></a>
+            <a th:href="@{/new}" th:if="${!alreadyApplied}"><span>勤怠登録</span></a>
+            <p th:if="${alreadyApplied}" class="applied-message">申請後は登録不可</p>
         </div>
 
         <div class="btn-application">
@@ -52,11 +53,28 @@
     </div>
 
     <div class="application-status">
-        <p th:text="${month} + '月申請状況：' + ${status}"></p>
+        <p th:text="${month + '月申請状況：' + status}"></p>
     </div>
 
     <table class="attendance-list">
         <thead>
+        <tr>
+            <th>所定時間</th>
+            <th>開始時間</th>
+            <th>終了時間</th>
+            <th>休憩時間</th>
+            <th>労働時間</th>
+            <th></th><th></th><th></th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>09:00</td>
+            <td>18:00</td>
+            <td>12:00~13:00</td>
+            <td>08:00</td>
+            <td></td><td></td><td></td>
+        </tr>
+        </thead>
         <tr>
             <th>日付</th>
             <th>勤務開始時間</th>
@@ -67,7 +85,6 @@
             <th>コメント</th>
             <th></th>
         </tr>
-        </thead>
         <tbody>
         <tr th:each="attendance, stat : ${attendances}">
             <td th:text="${#temporals.format(attendance.workDate, 'M/d')}"></td>
@@ -78,7 +95,9 @@
             <td th:text="${workingHour[stat.index]}"></td>
             <td th:text="${overHour[stat.index]}"></td>
             <td th:text="${attendance.comment}"></td>
-            <td><a class="edit-link" th:href="@{/attendance/edit/{id}(id=${attendance.id})}">勤怠編集</a></td>
+            <td><a class="edit-link" th:href="@{/attendance/edit/{id}(id=${attendance.id})}" th:if="${!alreadyApplied}">勤怠編集</a>
+                <p th:if="${alreadyApplied}" class="applied-message">申請後は編集不可</p>
+            </td>
         </tr>
         </tbody>
         <tr>
