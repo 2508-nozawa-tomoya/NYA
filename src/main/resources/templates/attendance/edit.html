@@ -18,6 +18,11 @@
 <main>
     <div class="main-contents">
         <form th:method="put" th:action="@{/attendance/update/{id}(id=${formModel.id})}" th:object="${formModel}">
+
+            <div th:if="${#fields.hasGlobalErrors()}" class="error-global">
+                <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+            </div>
+
             <div class="errorMessages">
                 <div th:if="${#fields.hasErrors('workDate')}" th:errors="*{workDate}"></div>
                 <div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></div>
