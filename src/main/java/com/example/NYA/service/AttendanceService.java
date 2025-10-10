@@ -92,7 +92,7 @@ public class AttendanceService {
     //「すでに申請中の勤怠があるか？」を判定する。
     public boolean isAlreadyApplied(List<Attendance> list) {
         return list.stream()
-                .anyMatch(a -> a.getStatus() != null && a.getStatus() == 1);
+                .anyMatch(a -> a.getStatus() != null && (a.getStatus() == 1 || a.getStatus() == 2));
     }
 
     //1日ごとの「残業時間」を求める（8時間を超えた分だけ）。
