@@ -8,8 +8,8 @@ public class ErrorMessages {
     public static final String E0004 = "日付を入力してください";
     public static final String E0005 = "開始時間を入力してください";
     public static final String E0006 = "終了時間を入力してください";
-    public static final String E0007 = "休憩開始時刻を入力してください";
-    public static final String E0008 = "休憩終了時刻を入力してください";
+    public static final String E0007 = "休憩開始時間を入力してください";
+    public static final String E0008 = "休憩終了時間を入力してください";
     public static final String E0009 = "所定時間内で設定してください";
     public static final String E0010 = "パスワードは半角文字かつ6文字以上20文字以下で入力してください";
     public static final String E0011 = "パスワードと確認用パスワードが一致しません";
