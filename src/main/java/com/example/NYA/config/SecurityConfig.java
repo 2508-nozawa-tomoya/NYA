@@ -11,7 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -28,8 +27,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                            CustomAuthenticationEntryPoint customAuthenticationEntryPoint,
-                                            CustomAccessDeniedHandler customAccessDeniedHandler) throws Exception{
+                                                   CustomAuthenticationEntryPoint customAuthenticationEntryPoint,
+                                                   CustomAccessDeniedHandler customAccessDeniedHandler) throws Exception {
 
         http
                 .formLogin(login -> login
@@ -45,7 +44,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login")
                         .clearAuthentication(true)
                 )
-                .authorizeHttpRequests(auth ->auth
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**").permitAll()
                         .requestMatchers("/approval/**").hasRole("APPROVER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -62,15 +61,10 @@ public class SecurityConfig {
         return http.build();
     }
 
-//    //パスワードの暗号化
-//    @Bean
-//    PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-
+    //パスワードの暗号化
     @Bean
-    PasswordEncoder passwordEncoder(){
-        // 暗号化しない・そのまま比較するモード
-        return NoOpPasswordEncoder.getInstance();
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
 }

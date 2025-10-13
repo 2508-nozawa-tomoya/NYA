@@ -43,27 +43,13 @@ function CheckAlter(){
 }
 
 // パスワード設定画面用
+function togglePasswordVisibility() {
+    const password = document.getElementById('passwordInput');
+    const confirmation = document.getElementById('confirmationPasswordInput');
+    const isChecked = document.getElementById('showPasswordCheckbox').checked;
+
+    password.type = isChecked ? 'text' : 'password';
+    confirmation.type = isChecked ? 'text' : 'password';
+}
 
 // 承認画面用
-document.addEventListener("DOMContentLoaded", function () {
-    const approveBtn = document.querySelector('button[type="submit"][value="approve"]');
-    const rejectBtn = document.querySelector('button[type="submit"][value="reject"]');
-
-    if (approveBtn) {
-        approveBtn.addEventListener("click", function (e) {
-            const confirmed = confirm("選択された勤怠を承認してもよろしいですか？");
-            if (!confirmed) {
-                e.preventDefault();
-            }
-        });
-    }
-
-    if (rejectBtn) {
-        rejectBtn.addEventListener("click", function (e) {
-            const confirmed = confirm("選択された勤怠を差戻してもよろしいですか？");
-            if (!confirmed) {
-                e.preventDefault();
-            }
-        });
-    }
-});

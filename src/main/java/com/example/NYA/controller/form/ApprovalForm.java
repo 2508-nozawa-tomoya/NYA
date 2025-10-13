@@ -9,6 +9,6 @@ import java.util.List;
 @Setter
 public class ApprovalForm {
 
-    private List<UserAttendanceForm> userAttendanceFormList;
+    private List<UserAttendanceForm> approvalAttendances;
 
 }

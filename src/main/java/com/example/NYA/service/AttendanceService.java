@@ -212,21 +212,19 @@ public class AttendanceService {
     }
 
     // レコード更新(一括承認)
-    public void approve(List<UserAttendanceForm> selected) {
-        for (UserAttendanceForm userAttendanceForm : selected) {
-            Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
+    public void approve(List<Integer> approveIds) {
+        for (Integer approveId : approveIds) {
+            Attendance attendance = attendanceRepository.findById(approveId).orElseThrow();
             attendance.setStatus(2);
-            attendance.setComment(userAttendanceForm.getComment());
             attendanceRepository.save(attendance);
         }
     }
 
     // レコード更新(一括差戻し)
-    public void reject(List<UserAttendanceForm> selected) {
-        for (UserAttendanceForm userAttendanceForm : selected) {
-            Attendance attendance = attendanceRepository.findById(userAttendanceForm.getId()).orElseThrow();
+    public void reject(List<Integer> approveIds) {
+        for (Integer approveId : approveIds) {
+            Attendance attendance = attendanceRepository.findById(approveId).orElseThrow();
             attendance.setStatus(3);
-            attendance.setComment(userAttendanceForm.getComment());
             attendanceRepository.save(attendance);
         }
     }
