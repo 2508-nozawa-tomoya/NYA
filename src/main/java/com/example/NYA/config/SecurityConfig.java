@@ -63,8 +63,7 @@ public class SecurityConfig {
 
     //パスワードの暗号化
     @Bean
-    PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
 }
