@@ -575,6 +575,18 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   background: #004b8d;
 }
 
+.login input[type="checkbox"] {
+  width: auto;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.togglePassword {
+    text-align: left;
+    padding: 12px;
+    font-size: 0.95em;
+}
+
 
 .loginError {
     text-align:center;
@@ -644,6 +656,10 @@ table.user-table td {
 
 table.user-table tr:nth-child(even) td {
     background-color: #f0f4f8;
+}
+
+.stopped-user td {
+    background-color: #A1A3A6 !important;
 }
 
 .edit-link {
@@ -769,7 +785,8 @@ table.user-table tr:nth-child(even) td {
 
 .user-registration-form input[type="submit"] {
     border: none;
-    margin: 0px auto 30px;
+    margin-right: 10px;
+    margin-bottom: 30px;
     width: 100px;
     color: #fff;
     background-color: #007bff;
@@ -778,10 +795,50 @@ table.user-table tr:nth-child(even) td {
     border-radius: 4px;
     transition: background 0.2s;
     font-size: 1.6em;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    ine-height: 1.2;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1),
+                    -2px -2px 6px rgba(255,255,255,0.8);
   }
 .user-registration-form input[type="submit"]:hover {
     background-color: #005fcc;
+    transform: translateY(1px);
+    box-shadow: inset 2px 2px 4px rgba(0,0,0,0.15);
   }
+
+.admin-return-btn {
+    border: none;
+    margin-left: 10px;
+    margin-bottom: 30px;
+    width: 72px;
+    color: #004b8d;
+    background-color: #ffffff;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    font-size: 1.6em;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    ine-height: 1.2;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1),
+                    -2px -2px 6px rgba(255,255,255,0.8);
+}
+
+
+.admin-return-btn:hover {
+    background-color: #f9f9f9;
+    transform: translateY(1px);
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
+}
+
 
 .floatLabel{
     position: absolute;

@@ -53,3 +53,18 @@ function togglePasswordVisibility() {
 }
 
 // 承認画面用
+
+//ログイン画面用
+document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    toggle.addEventListener("change", function () {
+        if (toggle.checked) {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    });
+});
+

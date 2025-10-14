@@ -41,7 +41,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="user : ${users}">
+                <tr th:classappend="${user.isStopped == 1} ? 'stopped-user' : '' " th:each="user : ${users}">
                     <td class="td-edit">
                         <a class="edit-link" th:href="@{/admin/edit/{id}(id=${user.id})}">編集</a>
                     </td>
