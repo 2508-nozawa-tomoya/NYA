@@ -7,13 +7,6 @@
     <title>新規ユーザー登録画面</title>
 </head>
 <body>
-    <header class="header-contents">
-        <div class="header">
-            <div>
-                <a th:href="@{/admin/show}">戻る</a>
-            </div>
-        </div>
-    </header>
     <main class="registration-main">
         <h2 class="user-registration-title">ユーザー登録</h2>
         <div class="registration-user">
@@ -84,9 +77,11 @@
                         <input class="time-input" type="time" th:field="*{restEnd}">
                     </div>
                 </div>
-                <p>
-                <input type="submit" value="登録">
-                </p>
+                <div class="button-group">
+                    <input type="submit" value="登録">
+                    <a class="admin-return-btn" th:href="@{/admin/show}">戻る</a>
+                </div>
+
             </form>
         </div>
     </main>
