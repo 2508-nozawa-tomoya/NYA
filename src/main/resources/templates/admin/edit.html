@@ -34,9 +34,13 @@
                 <label class="floatLabel">パスワード(記号を含む半角6文字以上20文字以下)</label>
                 <input type="password" th:field="*{password}">
                 </p>
-                <p>
+                <p class="confirmationPassword-p">
                 <label class="floatLabel">確認用パスワード</label>
                 <input type="password" name="confirmationPassword" th:value="${confirmationPassword}">
+                </p>
+                <p class="togglePassword">
+                    <input type="checkbox" id="togglePassword" />
+                    <label for="togglePassword">パスワードを表示</label>
                 </p>
                 <p>
                 <label class="floatLabel">氏名(10文字以下)</label>

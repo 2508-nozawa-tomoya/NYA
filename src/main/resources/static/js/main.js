@@ -58,12 +58,15 @@ function togglePasswordVisibility() {
 document.addEventListener("DOMContentLoaded", function () {
     const toggle = document.getElementById("togglePassword");
     const passwordInput = document.getElementById("password");
+    const confirmationPasswordInput = document.getElementById("confirmationPassword");
 
     toggle.addEventListener("change", function () {
         if (toggle.checked) {
             passwordInput.type = "text";
+            confirmationPasswordInput.type = "text";
         } else {
             passwordInput.type = "password";
+            confirmationPasswordInput.type = "password";
         }
     });
 });
