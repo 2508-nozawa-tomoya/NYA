@@ -319,17 +319,22 @@ table.attendance-list tr:nth-child(even) td {
 }
 
 .edit-link {
-    background-color: #ffc107;
+    background: #f0f0f3;
     color: #333;
     text-decoration: none;
     padding: 4px 10px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    border-radius: 8px;
     font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.15),
+                -2px -2px 5px rgba(255,255,255,0.8);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 .edit-link:hover {
-    background-color: #e0a800;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.15),
+                inset -2px -2px 5px rgba(255,255,255,0.8);
+    color: #000;
 }
 
 /* ==============================
