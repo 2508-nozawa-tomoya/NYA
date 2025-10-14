@@ -64,7 +64,7 @@
             <th>終了時間</th>
             <th>休憩時間</th>
             <th>労働時間</th>
-            <th></th><th></th><th></th>
+            <th></th><th></th>
         </tr>
         <tr>
             <td></td>
@@ -72,7 +72,7 @@
             <td>18:00</td>
             <td>12:00~13:00</td>
             <td>08:00</td>
-            <td></td><td></td><td></td>
+            <td></td><td></td>
         </tr>
         </thead>
         <tr>
@@ -82,7 +82,6 @@
             <th>休憩時間</th>
             <th>労働時間</th>
             <th>超過時間</th>
-            <th>コメント</th>
             <th></th>
         </tr>
         <tbody>
@@ -94,7 +93,6 @@
             <!-- 労働時間 -->
             <td th:text="${workingHour[stat.index]}"></td>
             <td th:text="${overHour[stat.index]}"></td>
-            <td th:text="${attendance.comment}"></td>
             <td><a class="edit-link" th:href="@{/attendance/edit/{id}(id=${attendance.id})}" th:if="${!alreadyApplied}">勤怠編集</a>
                 <p th:if="${alreadyApplied}" class="applied-message">申請後は編集不可</p>
             </td>
@@ -106,14 +104,14 @@
             <th>休憩時間</th>
             <th>労働時間</th>
             <th>超過時間</th>
-            <th></th><th></th>
+            <th></th>
         </tr>
         <tr>
             <td></td><td></td><td></td>
             <td th:text="${totalDto.totalRestTimeFormatted}"></td>
             <td th:text="${totalDto.totalWorkTimeFormatted}"></td>
             <td th:text="${totalDto.totalOverTimeFormatted}"></td>
-            <td></td><td></td>
+            <td></td>
         </tr>
     </table>
 </div>
