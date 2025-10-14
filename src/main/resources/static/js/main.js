@@ -33,3 +33,36 @@ function CheckDelete(){
 		return false;
 	}
 }
+
+function CheckAlter(){
+	if(confirm('パスワードを変更しますか?')){
+		return true;
+	} else{
+		return false;
+	}
+}
+
+// パスワード設定画面用
+function togglePasswordVisibility() {
+    const password = document.getElementById('passwordInput');
+    const confirmation = document.getElementById('confirmationPasswordInput');
+    const isChecked = document.getElementById('showPasswordCheckbox').checked;
+
+    password.type = isChecked ? 'text' : 'password';
+    confirmation.type = isChecked ? 'text' : 'password';
+}
+
+//ログイン画面用
+document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    toggle.addEventListener("change", function () {
+        if (toggle.checked) {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    });
+});
+
