@@ -747,7 +747,6 @@ table.user-table tr:nth-child(even) td {
     border-bottom:solid 1px #e5e5e5;
 }
 
-
 .registration-user {
     text-align: center;
 }
@@ -781,6 +780,17 @@ table.user-table tr:nth-child(even) td {
      font-size: 1.6em;
      padding: .8em .5em;
      border-radius: 2px;
+}
+
+.confirmationPassword-p {
+    margin-bottom: 10px !important;
+}
+
+.user-registration-form input[type="checkbox"]{
+     width: auto;
+     display: inline-block;
+     margin-top: 0px;
+     margin-right: 6px;
 }
 
 .user-registration-form input[type="submit"] {
