@@ -25,13 +25,13 @@
                 </div>
 
                 <div class="form-item">
-                    <label>【開始】</label>
+                    <label>【勤務開始】</label>
                     <div class="error" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></div>
                     <input type="time" class="input-area" th:field="*{startTime}" />
                 </div>
 
                 <div class="form-item">
-                    <label>【終了】</label>
+                    <label>【勤務終了】</label>
                     <div class="error" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></div>
                     <input type="time" class="input-area" th:field="*{endTime}" />
                 </div>

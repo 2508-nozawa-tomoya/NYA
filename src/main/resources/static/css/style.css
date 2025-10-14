@@ -336,7 +336,6 @@ table.attendance-list tr:nth-child(even) td {
    勤怠登録画面
 ============================== */
 
-/* ページ全体 */
 body {
     font-family: "Noto Sans JP", "Segoe UI", Arial, sans-serif;
     background-color: #f0f4fa;
@@ -345,7 +344,6 @@ body {
     padding: 0;
 }
 
-/* コンテナ */
 .page-new {
     position: relative;
     width: 90%;
@@ -358,7 +356,6 @@ body {
     overflow: hidden;
 }
 
-/* 上部の青いライン */
 .page-new::before {
     content: "";
     display: block;
@@ -372,7 +369,6 @@ body {
     left: 0;
 }
 
-/* 見出し */
 .page-new h1 {
     margin-bottom: 30px;
     color: #fff;
@@ -385,7 +381,6 @@ body {
     font-weight: bold;
 }
 
-/* 横並びフォーム全体 */
 .page-new form {
     display: flex;
     flex-direction: column;
@@ -393,68 +388,80 @@ body {
     gap: 25px;
 }
 
-/* 入力行 */
-.page-new .form-row {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    flex-wrap: nowrap;
-    margin-bottom: 8px;
+.page-new .main-contents form .error-global {
+    font-size: 17px;
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
-/* 各入力項目（ラベル＋入力） */
+.page-new .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "date date"
+      "start end"
+      "restStart restEnd";
+    gap: 25px 60px;
+    justify-items: center;
+}
+
 .page-new .form-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 180px;
 }
 
-/* ラベル */
+/* エリアの対応付け */
+.page-new .form-item:nth-child(1) { grid-area: date; }
+.page-new .form-item:nth-child(2) { grid-area: start; }
+.page-new .form-item:nth-child(3) { grid-area: end; }
+.page-new .form-item:nth-child(4) { grid-area: restStart; }
+.page-new .form-item:nth-child(5) { grid-area: restEnd; }
+
 .page-new .form-item label {
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-size: 14px;
     color: #004b8d;
+    text-align: center;
 }
 
-/* 入力欄 */
 .page-new .input-area {
-    width: 80%;
-    padding: 6px 8px;
+    width: 150px;
+    padding: 8px 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 15px;
     text-align: center;
     box-sizing: border-box;
     transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #fff;
 }
 
-/* フォーカス時 */
 .page-new .input-area:focus {
     border-color: #007bff;
     box-shadow: 0 0 4px rgba(0,123,255,0.4);
     outline: none;
 }
 
-/* エラーメッセージ */
-.page-new .form-item div[style*="color:red"],
-.page-new .form-item .field-error,
-.page-new .form-item .error,
-.page-new .form-item div[th\\:errors] {
-    font-size: 12px;
-    margin-top: 3px;
-    color: red;
-    display: block;
-    width: 180px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    box-sizing: border-box;
+/* 時計アイコン非表示 */
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    background: none;
 }
 
-/* ボタン群 */
+/* エラー */
+.page-new .form-item .error {
+     font-size: 14px;
+     color: red;
+     text-align: center;
+     margin-top: 4px;
+     white-space: nowrap;
+     display: inline-block;
+     max-width: 300px;
+ }
+
 .page-new .button-group {
     display: flex;
     justify-content: center;
@@ -463,7 +470,6 @@ body {
     margin-top: 25px;
 }
 
-/* ボタン全体（登録・戻る共通） */
 .page-new .btn-add,
 .page-new .btn-return a {
     display: inline-block;
@@ -1068,4 +1074,12 @@ button.btn-reject:hover {
 
 body {
     padding-bottom: 70px; /* ボタン分のスペースを確保 */
+}
+
+.errorMessages {
+    color: red;
+    font-size: 15px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    line-height: 1.4;
 }
