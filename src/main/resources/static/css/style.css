@@ -1220,4 +1220,30 @@ body {
     padding: 0.5em; /* 任意 */
 }
 
+.page-new .btn-delete {
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+    padding: 10px 0;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    line-height: 1.2;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1),
+                -2px -2px 6px rgba(255,255,255,0.8);
+}
+
+.page-new .btn-delete {
+    color: #fff;
+    background-color: #e74c3c;
+}
+
+.page-new .btn-delete:hover {
+    background-color: #c0392b;
+    transform: translateY(1px);
+    box-shadow: inset 2px 2px 4px rgba(0,0,0,0.15);
+}
 
