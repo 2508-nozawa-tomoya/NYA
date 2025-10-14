@@ -52,8 +52,6 @@ function togglePasswordVisibility() {
     confirmation.type = isChecked ? 'text' : 'password';
 }
 
-// 承認画面用
-
 //ログイン画面用
 document.addEventListener("DOMContentLoaded", function () {
     const toggle = document.getElementById("togglePassword");

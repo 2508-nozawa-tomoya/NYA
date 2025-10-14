@@ -319,17 +319,22 @@ table.attendance-list tr:nth-child(even) td {
 }
 
 .edit-link {
-    background-color: #ffc107;
+    background: #f0f0f3;
     color: #333;
     text-decoration: none;
     padding: 4px 10px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    border-radius: 8px;
     font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.15),
+                -2px -2px 5px rgba(255,255,255,0.8);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 .edit-link:hover {
-    background-color: #e0a800;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.15),
+                inset -2px -2px 5px rgba(255,255,255,0.8);
+    color: #000;
 }
 
 /* ==============================
@@ -1057,13 +1062,15 @@ table.user-table tr:nth-child(even) td {
     margin-bottom: 15px;
 }
 
-/* コメント入力欄 */
-input[name="comment"] {
-    width: 90%;
-    padding: 5px 8px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+.select-wrapper {
+    font-size: 15px;
+    font-weight: bold;
+    color: #004b8d;
+    margin-bottom: 15px;
+}
+
+.hidden-checkbox {
+    display: none;
 }
 
 /* ボタンエリア */
@@ -1150,3 +1157,67 @@ body {
     margin-bottom: 10px;
     line-height: 1.4;
 }
+
+/* ==============================
+   パスワード変更画面
+============================== */
+.password-change-wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 10px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.password-change-wrapper label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #004b8d;
+}
+
+.password-change-wrapper input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.password-change-wrapper .errorMessages {
+    margin-bottom: 15px;
+    color: red;
+    font-size: 14px;
+    text-align: center;
+}
+
+.password-change-wrapper .btn-submit {
+    padding: 10px 20px;
+        font-size: 15px;
+        font-weight: bold;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        color: #fff;
+        background-color: #007bff;
+        transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.1),
+                    -2px -2px 5px rgba(255,255,255,0.6);
+}
+
+.password-change-wrapper .btn-submit:hover {
+    background-color: #005fcc;
+}
+
+.password-change-wrapper input[type="password"],
+.password-change-wrapper input[type="text"] {
+    width: 100%; /* または固定幅 e.g., 300px */
+    font-family: inherit;
+    font-size: 16px;
+    box-sizing: border-box;
+    padding: 0.5em; /* 任意 */
+}
+
+
