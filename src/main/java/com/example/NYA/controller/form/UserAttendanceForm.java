@@ -22,7 +22,6 @@ public class UserAttendanceForm {
     private LocalTime startRest;
     private LocalTime endRest;
     private Integer status;
-    private String comment;
     private Timestamp createdDate;
     private Timestamp updatedDate;
 

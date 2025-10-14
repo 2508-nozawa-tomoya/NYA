@@ -192,7 +192,6 @@ public class AttendanceService {
             attendanceForm.setStartRest(result.getStartRest());
             attendanceForm.setEndRest(result.getEndRest());
             attendanceForm.setStatus(result.getStatus());
-            attendanceForm.setComment(result.getComment());
             attendanceForm.setCreatedDate(result.getCreatedDate());
             attendanceForm.setUpdatedDate(result.getUpdatedDate());
         }
@@ -250,7 +249,6 @@ public class AttendanceService {
             attendance.setStartRest(result.getStartRest());
             attendance.setEndRest(result.getEndRest());
             attendance.setStatus(result.getStatus());
-            attendance.setComment(result.getComment());
             attendance.setCreatedDate(result.getCreatedDate());
             attendance.setUpdatedDate(result.getUpdatedDate());
             attendances.add(attendance);
@@ -276,7 +274,6 @@ public class AttendanceService {
         attendance.setStartRest(reqAttendance.getStartRest());
         attendance.setEndRest(reqAttendance.getEndRest());
         attendance.setStatus(reqAttendance.getStatus());
-        attendance.setComment(reqAttendance.getComment());
         return attendance;
     }
 }

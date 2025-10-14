@@ -41,9 +41,6 @@ public class Attendance {
     @Column(name = "status", insertable = false, updatable = true)
     private Integer status;
 
-    @Column
-    private String comment;
-
     @Column(name = "created_date", insertable = false, updatable = false)
     private Timestamp createdDate;
 
