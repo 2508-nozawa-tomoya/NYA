@@ -24,30 +24,37 @@
     <div class="main-contents">
         <h1 class="title">申請一覧</h1>
         <form th:method="put" th:action="@{/approval}" class="approval-form">
-            <div class="errorMessages">
+            <div class="error-global">
                 <div th:if="${errorMessages != null}" th:each="errorMessage : ${errorMessages}" th:text="${errorMessage}"></div>
             </div>
             <!-- CSRFトークン -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
             <div th:if="${#lists.isEmpty(approvalUsers)}">
-                <p>申請はありません</p>
+                <p style="color: blue; font-weight: bold;">申請はありません</p>
             </div>
 
             <div th:unless="${#lists.isEmpty(approvalUsers)}">
                 <div class="select-all-wrapper">
                     <label>
-                        <input type="checkbox" onclick="toggleAll(this)"> 全ユーザー選択
+                        <input type="checkbox" onclick="toggleAll(this)"> 全ユーザーを確認済みにする
                     </label>
                 </div>
 
-                <div class="approval-users" th:each="approvalUser : ${approvalUsers}" th:if="${loginUser.departmentId == approvalUser.departmentId}">
+                <div class="approval-users"
+                     th:each="approvalUser : ${approvalUsers}"
+                     th:if="${loginUser.departmentId == approvalUser.departmentId}">
                     <section class="approval-user-section">
-
+                        <div class="select-wrapper">
+                            <input type="checkbox"
+                                   class="toggle-user"
+                                   th:attr="data-user-id=${approvalUser.id}"
+                                   onclick="toggleUser(this)"> 確認済み
+                        </div>
                         <table class="user-basic-info-table">
                             <tbody>
                             <tr>
-                                <th>ユーザー名</th>
+                                <th>社員番号</th>
                                 <td><span class="user-account" th:text="${approvalUser.account}"></span></td>
                             </tr>
                             <tr>
@@ -56,17 +63,24 @@
                             </tr>
                             <tr>
                                 <th>部署</th>
-                                <td><span class="user-department" th:text="${approvalUser.departmentId}"></span></td>
+                                <td>
+                                    <span class="user-department"
+                                          th:switch="${approvalUser.departmentId}">
+                                        <span th:case="1">人事部</span>
+                                        <span th:case="2">営業部</span>
+                                        <span th:case="3">技術部</span>
+                                    </span>
+                                </td>
                             </tr>
                             <tr>
-                                <th>勤務時間</th>
+                                <th>所定勤務時間</th>
                                 <td>
                                     <span class="user-work-time" th:text="${approvalUser.workStart}"></span> -
                                     <span class="user-work-time" th:text="${approvalUser.workEnd}"></span>
                                 </td>
                             </tr>
                             <tr>
-                                <th>休憩時間</th>
+                                <th>所定休憩時間</th>
                                 <td>
                                     <span class="user-rest-time" th:text="${approvalUser.restStart}"></span> -
                                     <span class="user-rest-time" th:text="${approvalUser.restEnd}"></span>
@@ -74,48 +88,36 @@
                             </tr>
                             </tbody>
                         </table>
-
                         <details class="attendance-details">
                             <summary>勤怠情報を表示</summary>
                             <table class="attendance-table">
                                 <thead>
                                 <tr>
-                                    <th>
-                                        <input type="checkbox"
-                                               class="toggle-user"
-                                               th:attr="data-user-id=${approvalUser.id}"
-                                               onclick="toggleUser(this)"> 全選択
-                                    </th>
                                     <th>日付</th>
                                     <th>出勤</th>
                                     <th>退勤</th>
                                     <th>休憩開始</th>
                                     <th>休憩終了</th>
                                     <th>ステータス</th>
-                                    <th>コメント</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="approvalAttendance : ${approvalAttendances}"
                                     th:if="${approvalUser.id == approvalAttendance.user.id}"
                                     th:class="'user-' + ${approvalAttendance.user.id}">
-                                    <td>
-                                        <input type="checkbox"
-                                               name="approvedIds"
-                                               th:value="${approvalAttendance.id}"
-                                               th:checked="${approvalAttendance.approved}"
-                                               th:attr="data-user-id=${approvalAttendance.user.id}">
-                                    </td>
+
+                                    <input type="checkbox"
+                                           name="approvedIds"
+                                           class="hidden-checkbox"
+                                           th:value="${approvalAttendance.id}"
+                                           th:checked="${approvalAttendance.approved}"
+                                           th:attr="data-user-id=${approvalAttendance.user.id}">
                                     <td th:text="${approvalAttendance.workDate}"></td>
                                     <td th:text="${approvalAttendance.startTime}"></td>
                                     <td th:text="${approvalAttendance.endTime}"></td>
                                     <td th:text="${approvalAttendance.startRest}"></td>
                                     <td th:text="${approvalAttendance.endRest}"></td>
                                     <td th:text="${approvalAttendance.statusLabel}"></td>
-                                    <td>
-                                        <input type="hidden" name="attendanceIds" th:value="${approvalAttendance.id}">
-                                        <input type="text" name="comment" th:value="${approvalAttendance.comment}">
-                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

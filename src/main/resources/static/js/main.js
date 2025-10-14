@@ -33,23 +33,3 @@ function CheckDelete(){
 		return false;
 	}
 }
-
-function CheckAlter(){
-	if(confirm('パスワードを変更しますか?')){
-		return true;
-	} else{
-		return false;
-	}
-}
-
-// パスワード設定画面用
-function togglePasswordVisibility() {
-    const password = document.getElementById('passwordInput');
-    const confirmation = document.getElementById('confirmationPasswordInput');
-    const isChecked = document.getElementById('showPasswordCheckbox').checked;
-
-    password.type = isChecked ? 'text' : 'password';
-    confirmation.type = isChecked ? 'text' : 'password';
-}
-
-// 承認画面用

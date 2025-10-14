@@ -222,6 +222,7 @@ public class AttendanceService {
 
     // レコード更新(一括差戻し)
     public void reject(List<Integer> approveIds) {
+
         for (Integer approveId : approveIds) {
             Attendance attendance = attendanceRepository.findById(approveId).orElseThrow();
             attendance.setStatus(3);

@@ -1,11 +1,13 @@
 package com.example.NYA.controller;
 
 import com.example.NYA.controller.form.UserForm;
+import com.example.NYA.security.LoginUserDetails;
 import com.example.NYA.service.UserService;
 import com.example.NYA.validation.CreateGroup;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -31,7 +33,8 @@ public class PasswordSettingController {
 
     // パスワード変更画面表示
     @GetMapping("/password/change/{id}")
-    public ModelAndView changePassword(@PathVariable String id,
+    public ModelAndView changePassword(@AuthenticationPrincipal LoginUserDetails loginUser,
+                                       @PathVariable String id,
                                        RedirectAttributes attributes) {
 
         List<String> errorMessages = new ArrayList<>();
@@ -51,28 +54,28 @@ public class PasswordSettingController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/password-change");
         mav.addObject("formModel", user);
+        mav.addObject("loginUser", loginUser);
         return mav;
     }
 
     // パスワード変更処理
     @PutMapping("password/update/{id}")
-    public ModelAndView updatePassword(String confirmationPassword,
+    public ModelAndView updatePassword(@AuthenticationPrincipal LoginUserDetails loginUser,
+                                       String confirmationPassword,
                                        @ModelAttribute("formModel")
                                        @Validated({Default.class, CreateGroup.class}) UserForm userForm,
                                        BindingResult result) {
 
-        if (!result.hasErrors() && userForm.getPassword() != null) {
-            String password = userForm.getPassword();
-            if (!password.matches(confirmationPassword)) {
-                FieldError fieldError = new FieldError(result.getObjectName(),
-                        "password", E0011);
-                result.addError(fieldError);
-            }
+        if (!userForm.getPassword().matches(confirmationPassword)) {
+            FieldError fieldError = new FieldError(result.getObjectName(),
+                    "password", E0011);
+            result.addError(fieldError);
         }
 
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
             mav.addObject("formModel", userForm);
+            mav.addObject("loginUser", loginUser);
             mav.setViewName("/password-change");
             return mav;
         }

@@ -3,65 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/style.css}" rel="styleSheet">
-    <script th:src="@{/js/main.js}"></script>
     <title>勤怠編集</title>
 </head>
 <body>
 <header>
-    <div class="header-contents">
-        <h1>勤怠編集</h1>
-        <form class="logout" th:action="@{/logout}" th:method="get">
-            <input type="submit" value="ログアウト">
-        </form>
-    </div>
 </header>
 <main>
-    <div class="main-contents">
-        <form th:method="put" th:action="@{/attendance/update/{id}(id=${formModel.id})}" th:object="${formModel}">
+    <div class="main-contents page-new">
+        <h1>勤怠編集</h1>
+        <form th:method="put" th:action="@{/attendance/update/{id}(id=${formModel.id})}" th:object="${formModel}" onsubmit="return confirmSubmit(event, '更新しますか？')">
 
             <div th:if="${#fields.hasGlobalErrors()}" class="error-global">
                 <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
             </div>
 
             <div class="errorMessages">
-                <div th:if="${#fields.hasErrors('workDate')}" th:errors="*{workDate}"></div>
-                <div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></div>
-                <div th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></div>
-                <div th:if="${#fields.hasErrors('startRest')}" th:errors="*{startRest}"></div>
-                <div th:if="${#fields.hasErrors('endRest')}" th:errors="*{endRest}"></div>
-                <div th:if="${errorMessages != null}" th:each="errorMessage : ${errorMessages}" th:text="${errorMessage}"></div>
+                <div class="error" th:if="${errorMessages != null}" th:each="errorMessage : ${errorMessages}" th:text="${errorMessage}"></div>
             </div>
             <!-- CSRFトークン -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <input type="hidden" th:field="*{userId}"/>
             <input type="hidden" th:field="*{status}"/>
-            <div class="form-area">
-                <label>日付</label>
-                <input type="date" th:field="*{workDate}"/>
-                <label>開始時間</label>
-                <input type="time" th:field="*{startTime}"/>
-                <label>終了時間</label>
-                <input type="time" th:field="*{endTime}"/>
-                <label>休憩開始時間</label>
-                <input type="time" th:field="*{startRest}"/>
-                <label>休憩終了時間</label>
-                <input type="time" th:field="*{endRest}"/>
-                <input type="submit" value="更新"/>
+
+            <div class="form-row">
+                <div class="form-item">
+                    <label>【日付】</label>
+                    <div class="error" th:if="${#fields.hasErrors('workDate')}" th:errors="*{workDate}"></div>
+                    <input type="date" class="input-area" th:field="*{workDate}"/>
+                </div>
+                <div class="form-item">
+                    <label>【開始】</label>
+                    <div class="error" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></div>
+                    <input type="time" class="input-area" th:field="*{startTime}"/>
+                </div>
+                <div class="form-item">
+                    <label>【終了】</label>
+                    <div class="error" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></div>
+                    <input type="time" class="input-area" th:field="*{endTime}"/>
+                </div>
+                <div class="form-item">
+                    <label>【休憩開始】</label>
+                    <div class="error" th:if="${#fields.hasErrors('startRest')}" th:errors="*{startRest}"></div>
+                    <input type="time" class="input-area" th:field="*{startRest}"/>
+                </div>
+                <div class="form-item">
+                    <label>【休憩終了】</label>
+                    <div class="error" th:if="${#fields.hasErrors('endRest')}" th:errors="*{endRest}"></div>
+                    <input type="time" class="input-area" th:field="*{endRest}"/>
+                </div>
+            </div>
+            <div class="button-group">
+                <input type="submit" class="btn-add" value="更新"/>
             </div>
         </form>
-        <form th:method="delete" th:action="@{/attendance/delete/{id}(id=${formModel.id})}">
+        <form th:method="delete" th:action="@{/attendance/delete/{id}(id=${formModel.id})}" onsubmit="return confirmSubmit(event, '本当に削除しますか？')">
             <!-- CSRFトークン -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <input type="submit" value="削除" onSubmit="return CheckDelete()"/>
+            <div class="button-group">
+                <input type="submit" class="btn-add" value="削除"/>
+            </div>
+            <div class="button-group">
+                <div class="btn-return"><a th:href="@{/}">戻る</a></div>
+            </div>
         </form>
     </div>
 </main>
 <footer>
-    <div class="footer-contents">
-        <form th:action="@{/}">
-            <input type="submit" value="戻る">
-        </form>
-    </div>
 </footer>
+<script>
+    function confirmSubmit(event, message) {
+    if (!confirm(message)) {
+        event.preventDefault();
+        return false;
+    }
+    return true;
+}
+</script>
 </body>
 </html>
