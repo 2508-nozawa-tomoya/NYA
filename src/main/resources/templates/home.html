@@ -47,9 +47,9 @@
     </div>
 
     <div class="month-nav">
-        <a th:href="@{'/?year=' + ${prevYear} + '&month=' + ${prevMonth}}">＜先月</a>
-        <span th:text="${month} + '月'"></span>
-        <a th:href="@{'/?year=' + ${nextYear} + '&month=' + ${nextMonth}}">来月＞</a>
+        <a th:href="@{'/?year=' + ${prevYear} + '&month=' + ${prevMonth}}">＜前月</a>
+        <a th:href="@{'/?year=' + ${currentYear} + '&month=' + ${currentMonth}}" class="btn-this-month">今月</a>
+        <a th:href="@{'/?year=' + ${nextYear} + '&month=' + ${nextMonth}}">次月＞</a>
     </div>
 
     <div class="application-status">

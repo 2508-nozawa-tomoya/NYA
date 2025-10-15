@@ -58,6 +58,7 @@ public class HomeController {
 
         // --- 月ナビゲーション ---
         LocalDate prev = monthStart.minusMonths(1);
+        LocalDate now = LocalDate.now();
         LocalDate next = monthStart.plusMonths(1);
 
         // --- CustomAuthenticationFailureHandlerで出たエラーを拾う ---
@@ -79,6 +80,8 @@ public class HomeController {
         mav.addObject("year", targetYear);
         mav.addObject("prevYear", prev.getYear());
         mav.addObject("prevMonth", prev.getMonthValue());
+        mav.addObject("currentYear", now.getYear());
+        mav.addObject("currentMonth", now.getMonthValue());
         mav.addObject("nextYear", next.getYear());
         mav.addObject("nextMonth", next.getMonthValue());
         mav.addObject("userId", loginUser.getId());
