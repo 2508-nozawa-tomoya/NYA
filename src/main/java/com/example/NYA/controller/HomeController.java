@@ -1,5 +1,6 @@
 package com.example.NYA.controller;
 
+import com.example.NYA.controller.form.UserForm;
 import com.example.NYA.repository.entity.Attendance;
 import com.example.NYA.security.LoginUserDetails;
 import com.example.NYA.service.AttendanceService;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -67,8 +70,22 @@ public class HomeController {
             session.removeAttribute("errorMessage");
         }
 
+        //所定労働時間の計算
+        UserForm user = userService.findById(loginUser.getId());
+        LocalTime workStart = user.getWorkStart();
+        LocalTime workEnd = user.getWorkEnd();
+        LocalTime restStart = user.getRestStart();
+        LocalTime restEnd = user.getRestEnd();
+
+        Duration workTime = Duration.between(workStart, workEnd);
+        Duration restTime = Duration.between(restStart, restEnd);
+
+        workTime = workTime.minus(restTime);
+        String defaultWorkTime = attendanceService.formatDuration(workTime);
+
         // --- Viewにセット ---
-        mav.addObject("loginUser", loginUser);
+        mav.addObject("loginUser", user);
+        mav.addObject("defaultWorkTime", defaultWorkTime);
         mav.addObject("attendances", attendanceList);
         mav.addObject("workingHour", workingHoursList);
         mav.addObject("overHour", overHourList);
