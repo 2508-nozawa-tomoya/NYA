@@ -44,7 +44,7 @@ public class AddController {
         String defaultWorkTime = attendanceService.formatDuration(workTime);
 
         model.addAttribute("attendanceForm", new AttendanceForm());
-        model.addAttribute("loginUser", loginUser);
+        model.addAttribute("loginUser", user);
         model.addAttribute("defaultWorkTime", defaultWorkTime);
         return "new";
     }
@@ -73,7 +73,7 @@ public class AddController {
             String defaultWorkTime = attendanceService.formatDuration(workTime);
 
             mav.addObject("attendanceForm", attendanceForm);
-            mav.addObject("loginUser", loginUser);
+            mav.addObject("loginUser", user);
             mav.addObject("defaultWorkTime", defaultWorkTime);
             return mav;
         }
