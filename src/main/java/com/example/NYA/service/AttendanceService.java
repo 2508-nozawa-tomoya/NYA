@@ -169,7 +169,7 @@ public class AttendanceService {
     }
 
     //Duration（時間の差を表すオブジェクト）を "hh:mm" 形式の文字列に直す共通関数。
-    private String formatDuration(Duration d) {
+    public String formatDuration(Duration d) {
         long hours = d.toHours();
         long minutes = d.minusHours(hours).toMinutes();
         return String.format("%02d:%02d", hours, minutes);

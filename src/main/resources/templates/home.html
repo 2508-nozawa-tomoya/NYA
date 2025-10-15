@@ -68,10 +68,10 @@
         </tr>
         <tr>
             <td></td>
-            <td>09:00</td>
-            <td>18:00</td>
-            <td>12:00~13:00</td>
-            <td>08:00</td>
+            <td th:text="${loginUser.workStart}"></td>
+            <td th:text="${loginUser.workEnd}"></td>
+            <td th:text="${loginUser.restStart + '~' + loginUser.restEnd}"></td>
+            <td th:text="${defaultWorkTime}"></td>
             <td></td><td></td>
         </tr>
         </thead>
