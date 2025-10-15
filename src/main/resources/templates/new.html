@@ -16,7 +16,20 @@
             <div th:if="${#fields.hasGlobalErrors()}" class="error-global">
                 <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
             </div>
-
+            <table class="attendance-list">
+                <thead>
+                <tr>
+                    <th>所定勤務時間</th>
+                    <th>所定休憩時間</th>
+                    <th>所定労働時間</th>
+                </tr>
+                <tr>
+                    <td th:text="${loginUser.workStart + '~' + loginUser.workEnd}"></td>
+                    <td th:text="${loginUser.restStart + '~' + loginUser.restEnd}"></td>
+                    <td th:text="${defaultWorkTime}"></td>
+                </tr>
+                </thead>
+            </table>
             <div class="form-row">
                 <div class="form-item">
                     <label>【日付】</label>
