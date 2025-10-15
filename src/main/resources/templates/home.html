@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>ホーム画面</title>
+</head>
+<body>
+<div class="header-contents">
+    <div class="header" th:if="${loginUser != null}">
+        <div class="admin-wrap">
+            <a class="btn-admin" th:if="${loginUser.departmentId == 1}" th:href="@{/admin/show}">管理者用</a>
+        </div>
+        <div class="approver-wrap">
+            <a class="btn-approver" th:if="${loginUser.authority == 0}" th:href="@{/approval}">承認者用</a>
+        </div>
+        <div class="btn-setting">
+            <a th:href="@{/password/change/{id}(id=${userId})}"><span>パスワード変更</span></a>
+        </div>
+        <form class="form-logout" th:action="@{/logout}" method="post">
+            <input class="button-logout" type="submit" value="ログアウト">
+        </form>
+    </div>
+</div>
+<div class="main-contents">
+    <h1 class="title">勤怠管理システム</h1>
+    <div th:text="${errorMessage}"></div>
+    <div class="user-info">
+        社員番号：<span th:text="${loginUser.account}"></span>
+    </div>
+
+    <div class="action-buttons">
+        <div class="btn-registration">
+            <a th:href="@{/new}" th:if="${!alreadyApplied}"><span>勤怠登録</span></a>
+            <p th:if="${alreadyApplied}" class="applied-message">申請後は登録不可</p>
+        </div>
+
+        <div class="btn-application">
+            <form th:if="${!alreadyApplied}" th:action="@{/application}" method="post">
+                <input type="hidden" name="year" th:value="${year}">
+                <input type="hidden" name="month" th:value="${month}">
+                <button type="submit" onclick="return confirmApplication();"><span>申請</span></button>
+            </form>
+
+            <p th:if="${alreadyApplied}" class="applied-message">申請済みです</p>
+        </div>
+    </div>
+
+    <div class="month-nav">
+        <a th:href="@{'/?year=' + ${prevYear} + '&month=' + ${prevMonth}}">＜前月</a>
+        <a th:href="@{'/?year=' + ${currentYear} + '&month=' + ${currentMonth}}" class="btn-this-month">今月</a>
+        <a th:href="@{'/?year=' + ${nextYear} + '&month=' + ${nextMonth}}">次月＞</a>
+    </div>
+
+    <div class="application-status">
+        <p th:text="${year + '年' + month + '月分の申請状況：' + status}"></p>
+    </div>
+
+    <table class="attendance-list">
+        <thead>
+        <tr>
+            <th>所定時間</th>
+            <th>開始時間</th>
+            <th>終了時間</th>
+            <th>休憩時間</th>
+            <th>労働時間</th>
+            <th></th><th></th>
+        </tr>
+        <tr>
+            <td></td>
+            <td th:text="${loginUser.workStart}"></td>
+            <td th:text="${loginUser.workEnd}"></td>
+            <td th:text="${loginUser.restStart + '~' + loginUser.restEnd}"></td>
+            <td th:text="${defaultWorkTime}"></td>
+            <td></td><td></td>
+        </tr>
+        </thead>
+        <tr>
+            <th>日付</th>
+            <th>勤務開始時間</th>
+            <th>勤務終了時間</th>
+            <th>休憩時間</th>
+            <th>労働時間</th>
+            <th>超過時間</th>
+            <th></th>
+        </tr>
+        <tbody>
+        <tr th:each="attendance, stat : ${attendances}">
+            <td th:text="${#temporals.format(attendance.workDate, 'M/d')}"></td>
+            <td th:text="${#temporals.format(attendance.startTime, 'HH:mm')}"></td>
+            <td th:text="${#temporals.format(attendance.endTime, 'HH:mm')}"></td>
+            <td th:text="${#temporals.format(attendance.startRest, 'HH:mm')} + '〜' + ${#temporals.format(attendance.endRest, 'HH:mm')}"></td>
+            <!-- 労働時間 -->
+            <td th:text="${workingHour[stat.index]}"></td>
+            <td th:text="${overHour[stat.index]}"></td>
+            <td><a class="edit-link" th:href="@{/attendance/edit/{id}(id=${attendance.id})}" th:if="${!alreadyApplied}">勤怠編集</a>
+                <p th:if="${alreadyApplied}" class="applied-message">申請後は編集不可</p>
+            </td>
+        </tr>
+        </tbody>
+        <tr>
+            <th>合計</th>
+            <th></th><th></th>
+            <th>休憩時間</th>
+            <th>労働時間</th>
+            <th>超過時間</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td></td><td></td><td></td>
+            <td th:text="${totalDto.totalRestTimeFormatted}"></td>
+            <td th:text="${totalDto.totalWorkTimeFormatted}"></td>
+            <td th:text="${totalDto.totalOverTimeFormatted}"></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+<script>
+    function confirmApplication() {
+        return confirm("申請しますか？");
+    }
+</script>
+</body>
+</html>

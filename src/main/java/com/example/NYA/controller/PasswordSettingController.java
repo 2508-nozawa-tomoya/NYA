@@ -1,0 +1,87 @@
+package com.example.NYA.controller;
+
+import com.example.NYA.controller.form.UserForm;
+import com.example.NYA.security.LoginUserDetails;
+import com.example.NYA.service.UserService;
+import com.example.NYA.validation.CreateGroup;
+import io.micrometer.common.util.StringUtils;
+import jakarta.validation.groups.Default;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.NYA.error.ErrorMessages.E0011;
+import static com.example.NYA.error.ErrorMessages.E0020;
+
+@Controller
+public class PasswordSettingController {
+
+    @Autowired
+    UserService userService;
+
+    // パスワード変更画面表示
+    @GetMapping("/password/change/{id}")
+    public ModelAndView changePassword(@AuthenticationPrincipal LoginUserDetails loginUser,
+                                       @PathVariable String id,
+                                       RedirectAttributes attributes) {
+
+        List<String> errorMessages = new ArrayList<>();
+        if (StringUtils.isBlank(id) || !id.matches("^[0-9]+$")) {
+            errorMessages.add(E0020);
+            attributes.addFlashAttribute("errorMessages", errorMessages);
+            return new ModelAndView("redirect:/");
+        }
+
+        UserForm user = userService.findById(Integer.valueOf(id));
+        if (user == null) {
+            errorMessages.add(E0020);
+            attributes.addFlashAttribute("errorMessages", errorMessages);
+            return new ModelAndView("redirect:/");
+        }
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/password-change");
+        mav.addObject("formModel", user);
+        mav.addObject("loginUser", loginUser);
+        return mav;
+    }
+
+    // パスワード変更処理
+    @PutMapping("password/update/{id}")
+    public ModelAndView updatePassword(@AuthenticationPrincipal LoginUserDetails loginUser,
+                                       String confirmationPassword,
+                                       @ModelAttribute("formModel")
+                                       @Validated({Default.class, CreateGroup.class}) UserForm userForm,
+                                       BindingResult result) {
+
+        if (!userForm.getPassword().matches(confirmationPassword)) {
+            FieldError fieldError = new FieldError(result.getObjectName(),
+                    "password", E0011);
+            result.addError(fieldError);
+        }
+
+        if (result.hasErrors()) {
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("formModel", userForm);
+            mav.addObject("loginUser", loginUser);
+            mav.setViewName("/password-change");
+            return mav;
+        }
+
+        userService.saveUser(userForm);
+        return new ModelAndView("redirect:/");
+    }
+
+}
