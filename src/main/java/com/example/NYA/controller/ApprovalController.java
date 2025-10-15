@@ -52,6 +52,8 @@ public class ApprovalController {
         LocalDate monthStart = LocalDate.of(targetYear, targetMonth, 1);
         LocalDate monthEnd = monthStart.withDayOfMonth(monthStart.lengthOfMonth());
 
+        int approvalMonth = targetMonth - 1;
+
         List<TotalDto> totalDtoList = new ArrayList<>();
         for (User approvalUser : approvalUsers) {
             Integer userId = approvalUser.getId();
@@ -66,7 +68,7 @@ public class ApprovalController {
         mav.addObject("approvalAttendances", approvalAttendances);
         mav.addObject("totalDtoList", totalDtoList);
         mav.addObject("year", targetYear);
-        mav.addObject("month", targetMonth);
+        mav.addObject("month", approvalMonth);
         return mav;
     }
 
