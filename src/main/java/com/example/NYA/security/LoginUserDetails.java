@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +25,10 @@ public class LoginUserDetails implements UserDetails {
     private final String name;
     private final Integer departmentId;
     private final Integer authority;
+    private final LocalTime workStart;
+    private final LocalTime workEnd;
+    private final LocalTime restStart;
+    private final LocalTime restEnd;
     private final short isStopped;
     private final Collection<? extends GrantedAuthority> authorities;
 
@@ -34,6 +39,10 @@ public class LoginUserDetails implements UserDetails {
         this.name = user.getName();
         this.departmentId = user.getDepartmentId();
         this.authority = user.getAuthority();
+        this.workStart = user.getWorkStart();
+        this.workEnd = user.getWorkEnd();
+        this.restStart = user.getRestStart();
+        this.restEnd = user.getRestEnd();
         this.isStopped = user.getIsStopped();
 
         if(user.getDepartmentId() == 1){

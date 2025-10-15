@@ -47,9 +47,9 @@
     </div>
 
     <div class="month-nav">
-        <a th:href="@{'/?year=' + ${prevYear} + '&month=' + ${prevMonth}}">＜先月</a>
-        <span th:text="${month} + '月'"></span>
-        <a th:href="@{'/?year=' + ${nextYear} + '&month=' + ${nextMonth}}">来月＞</a>
+        <a th:href="@{'/?year=' + ${prevYear} + '&month=' + ${prevMonth}}">＜前月</a>
+        <a th:href="@{'/?year=' + ${currentYear} + '&month=' + ${currentMonth}}" class="btn-this-month">今月</a>
+        <a th:href="@{'/?year=' + ${nextYear} + '&month=' + ${nextMonth}}">次月＞</a>
     </div>
 
     <div class="application-status">
@@ -68,10 +68,10 @@
         </tr>
         <tr>
             <td></td>
-            <td>09:00</td>
-            <td>18:00</td>
-            <td>12:00~13:00</td>
-            <td>08:00</td>
+            <td th:text="${loginUser.workStart}"></td>
+            <td th:text="${loginUser.workEnd}"></td>
+            <td th:text="${loginUser.restStart + '~' + loginUser.restEnd}"></td>
+            <td th:text="${defaultWorkTime}"></td>
             <td></td><td></td>
         </tr>
         </thead>
