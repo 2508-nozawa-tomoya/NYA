@@ -68,7 +68,7 @@ public class AttendanceController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/attendance/edit");
         mav.addObject("formModel", attendance);
-        mav.addObject("loginUser", loginUser);
+        mav.addObject("loginUser", user);
         mav.addObject("defaultWorkTime", defaultWorkTime);
         return mav;
     }
@@ -98,7 +98,7 @@ public class AttendanceController {
 
             ModelAndView mav = new ModelAndView();
             mav.addObject("formModel", attendanceForm);
-            mav.addObject("loginUser", loginUser);
+            mav.addObject("loginUser", user);
             mav.addObject("defaultWorkTime", defaultWorkTime);
             mav.setViewName("/attendance/edit");
             return mav;
