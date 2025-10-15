@@ -49,7 +49,7 @@ public class ApprovalController {
         //三項演算子
         int targetYear = (year != null) ? year : today.getYear();
         int targetMonth = (month != null) ? month : today.getMonthValue();
-        LocalDate monthStart = LocalDate.of(targetYear, targetMonth, 1);
+        LocalDate monthStart = LocalDate.of(targetYear, targetMonth - 1, 1);
         LocalDate monthEnd = monthStart.withDayOfMonth(monthStart.lengthOfMonth());
 
         int approvalMonth = targetMonth - 1;
