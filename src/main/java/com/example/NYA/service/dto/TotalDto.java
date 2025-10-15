@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 public class TotalDto {
+    private Integer userId;
     private List<Attendance> attendanceList;
     private Duration totalWorkTime;
     private Duration totalRestTime;

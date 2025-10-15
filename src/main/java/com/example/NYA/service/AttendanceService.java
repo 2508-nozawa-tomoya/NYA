@@ -155,6 +155,7 @@ public class AttendanceService {
 
         // ④ DTOに詰めて返却
         TotalDto dto = new TotalDto();
+        dto.setUserId(userId);
         dto.setAttendanceList(attendances);
         dto.setTotalWorkTime(totalWork);
         dto.setTotalRestTime(totalRest);

@@ -4,6 +4,7 @@ import com.example.NYA.controller.form.UserAttendanceForm;
 import com.example.NYA.repository.entity.User;
 import com.example.NYA.security.LoginUserDetails;
 import com.example.NYA.service.AttendanceService;
+import com.example.NYA.service.dto.TotalDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,9 @@ public class ApprovalController {
 
     // 承認者画面表示
     @GetMapping("/approval")
-    public ModelAndView approval(@AuthenticationPrincipal LoginUserDetails loginUser) {
+    public ModelAndView approval(@RequestParam(value = "year", required = false) Integer year,
+                                 @RequestParam(value = "month", required = false) Integer month,
+                                 @AuthenticationPrincipal LoginUserDetails loginUser) {
 
         List<UserAttendanceForm> approvalAttendances =
                 attendanceService.selectAttendanceByStatus(loginUser.getDepartmentId(), 1);
@@ -39,11 +43,30 @@ public class ApprovalController {
                 }
         }
 
+        // --- 月関連処理 ---
+        LocalDate today = LocalDate.now();
+
+        //三項演算子
+        int targetYear = (year != null) ? year : today.getYear();
+        int targetMonth = (month != null) ? month : today.getMonthValue();
+        LocalDate monthStart = LocalDate.of(targetYear, targetMonth, 1);
+        LocalDate monthEnd = monthStart.withDayOfMonth(monthStart.lengthOfMonth());
+
+        List<TotalDto> totalDtoList = new ArrayList<>();
+        for (User approvalUser : approvalUsers) {
+            Integer userId = approvalUser.getId();
+            TotalDto totalDto = attendanceService.getMonthly(userId, monthStart, monthEnd);
+            totalDtoList.add(totalDto);
+        }
+
         ModelAndView mav = new ModelAndView();
         mav.setViewName("approval/approval");
         mav.addObject("loginUser", loginUser);
         mav.addObject("approvalUsers", approvalUsers);
         mav.addObject("approvalAttendances", approvalAttendances);
+        mav.addObject("totalDtoList", totalDtoList);
+        mav.addObject("year", targetYear);
+        mav.addObject("month", targetMonth);
         return mav;
     }
 
